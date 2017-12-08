@@ -1,0 +1,90 @@
+<html>
+<head>
+  <style>
+    body {
+      background: black
+    }
+
+    .animation-wrap {
+      background: white;
+      width: 60vw;
+      height: 60vw;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .animation-svg {
+      position: absolute;
+      top: 30vw;
+      left: 0;
+      width: 30vw;
+      animation: animate-haus-2 2s infinite;
+    }
+
+    .animation-svg-2 {
+      position: absolute;
+      top: 0;
+      left: 30vw;
+      width: 30vw;
+      animation: animate-haus 2s infinite;
+    }
+
+    @keyframes animate-haus-2 {
+      from {
+        transform: translate(0, 0) scale(2, 2);
+        transform-origin: top right;
+        animation-timing-function: linear;
+      }
+
+      to {
+        transform: translate(-60vw, 60vw) scale(4, 4);
+        transform-origin: top right;
+      }
+    }
+
+
+    @keyframes animate-haus {
+      from {
+        transform: translate(0, 0) scale(1, 1);
+        transform-origin: top right;
+        animation-timing-function: linear;
+      }
+
+      to {
+        transform: translate(-30vw, 30vw) scale(2, 2);
+        transform-origin: top right;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="circle">
+
+  </div>
+
+  <section class="animation-wrap">
+    <svg class="animation-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 24">
+      <rect width="8" height="24"/>
+      <path d="M10,8h0a8,8,0,0,1,8,8v8a0,0,0,0,1,0,0H10a0,0,0,0,1,0,0V8A0,0,0,0,1,10,8Z"/>
+      <path d="M30,8h8a0,0,0,0,1,0,0V24a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V8a0,0,0,0,1,0,0Z" transform="translate(68 32) rotate(-180)"/>
+      <path d="M20,8h0a8,8,0,0,1,8,8v0a8,8,0,0,1-8,8h0a0,0,0,0,1,0,0V8a0,0,0,0,1,0,0Z" transform="translate(48 32) rotate(-180)"/>
+      <path d="M40,8h8a0,0,0,0,1,0,0V24a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V8A0,0,0,0,1,40,8Z"/>
+      <path d="M50,8h8a0,0,0,0,1,0,0v8a8,8,0,0,1-8,8h0a0,0,0,0,1,0,0V8A0,0,0,0,1,50,8Z"/>
+      <path d="M64,12h8a0,0,0,0,1,0,0V28a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V12A0,0,0,0,1,64,12Z" transform="translate(48 88) rotate(-90)"/>
+      <path d="M64,2h0a8,8,0,0,1,8,8v8a0,0,0,0,1,0,0H64a0,0,0,0,1,0,0V2a0,0,0,0,1,0,0Z" transform="translate(58 78) rotate(-90)"/>
+    </svg>
+    <svg class="animation-svg-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 24">
+      <rect width="8" height="24"/>
+      <path d="M10,8h0a8,8,0,0,1,8,8v8a0,0,0,0,1,0,0H10a0,0,0,0,1,0,0V8A0,0,0,0,1,10,8Z"/>
+      <path d="M30,8h8a0,0,0,0,1,0,0V24a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V8a0,0,0,0,1,0,0Z" transform="translate(68 32) rotate(-180)"/>
+      <path d="M20,8h0a8,8,0,0,1,8,8v0a8,8,0,0,1-8,8h0a0,0,0,0,1,0,0V8a0,0,0,0,1,0,0Z" transform="translate(48 32) rotate(-180)"/>
+      <path d="M40,8h8a0,0,0,0,1,0,0V24a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V8A0,0,0,0,1,40,8Z"/>
+      <path d="M50,8h8a0,0,0,0,1,0,0v8a8,8,0,0,1-8,8h0a0,0,0,0,1,0,0V8A0,0,0,0,1,50,8Z"/>
+      <path d="M64,12h8a0,0,0,0,1,0,0V28a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V12A0,0,0,0,1,64,12Z" transform="translate(48 88) rotate(-90)"/>
+      <path d="M64,2h0a8,8,0,0,1,8,8v8a0,0,0,0,1,0,0H64a0,0,0,0,1,0,0V2a0,0,0,0,1,0,0Z" transform="translate(58 78) rotate(-90)"/>
+    </svg>
+
+  </section>
+</body>
+</html>
