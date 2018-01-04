@@ -382,29 +382,23 @@ end
 #
 #
 uncomment do
-  live_loop :garage do
-    garage_door_full
-    sleep 16
-    driveway
-    walkway
-    # sleep ?
-    doorstep_1
+  garage_door_full
+  sleep 16
+  driveway
+  walkway
+  doorstep_1
+  haus_bd(1)
+  animal_haus
+  sleep 4
+  jingle_haus(1)
+  4.times do
     haus_bd(1)
-    animal_haus
-    sleep 4
-    jingle_haus(1)
-    4.times do
-      haus_bd(1)
-      sleep 1
-    end
-    go_away
-    doorstep_2
-    doorstep_fade
-    doorstep_all_in
-    windward(1)
-    sleep 16
-    
-    # doorstep 1
-    # car sound dies our, or door creaking shut?
+    sleep 1
   end
+  go_away
+  doorstep_2
+  doorstep_fade
+  doorstep_all_in
+  windward(1)
+  sleep 16
 end
