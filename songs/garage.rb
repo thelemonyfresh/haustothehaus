@@ -1,3 +1,4 @@
+run_file "/Users/daniel/recording/haustothehaus/toolbox.rb"
 use_bpm 128
 haus_samps = "/Users/daniel/recording/samples/haus/"
 
@@ -259,7 +260,7 @@ define :driveway do
     end
     sleep 1
   end
-
+  
   with_fx :echo, phase: 1, decay: 4, amp: 1.6 do
     5.times do |n|
       door_latch({start: 0.25, finish: 1, rate: 0.3*(n+1)})
@@ -271,108 +272,109 @@ end
 
 define :walkway do
   cue :walkway
-
+  
   96.times do |n|
     big_horn({cutoff_dec: (1-(n/128.0))}) if n%8 == 0
     windward_ramp(1) if n == 80
     haus_bd(1) if n < 87
     haus_bd(1-((n-86)/10.0)) if n > 86
-    blades_ramp(7) if n == 32
-    door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
-    entourage(8) if n == 32
-    sleep 1
-  end
-end
-
-define :doorstep_1 do
-  cue :doorstep_1
-  horny_bass(8)
-  64.times do |n|
-    blades_mod(4) if n == 32
-    big_horn({}) if n%8 == 0
-    haus_bd(1)
-    door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
-    entourage(4) if n == 32
-    sleep 1
-  end
-end
-
-define :doorstep_2 do
-  cue :doorstep_2
-  blades(4)
-  horny_bass(4)
-  windward_ramp(2)
-  entourage(4)
-  32.times do |n|
-    big_horn({}) if n%8 == 0
-    haus_bd(1)
-    door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
-    sleep 1
-  end
-end
-
-define :go_away do
-  cue :go_away
-  horny_bass_ramp(16)
-  blades_mod(16)
-  come_inside(8)
-  haus_keys(8)
-  128.times do |n|
-    # haus_bd(0.5)
-    door_latch({start: 0.25, finish: 0.4, cutoff_dec: 1}) if n%2 == 1
-    entourage(8) if n == 32
-    if n%8 == 1
-      s = ring(0,0.75,0,0.75).tick
-      puts s, s+0.25
-      big_horn({start: s, finish: s+0.25, cutoff_dec: 1})
+      blades_ramp(7) if n == 32
+      door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
+      entourage(8) if n == 32
+      sleep 1
     end
-
-    sleep 1
   end
-end
 
-define :doorstep_fade do
-  cue :doorstep_fade
-  blades(3)
-  windward(4)
-  entourage(7)
-  horny_bass_fade(4)
-  64.times do |n|
-    puts n
-    haus_bd(1) if n < 62
-    fs = knit(0.25,4,0.5,4,0.75,4)
-    ss = knit(0,4,0.25,4,0.5,4)
-    big_horn({start: ss.tick, finish: fs.tick, cutoff_dec: 1}) if (n%7 == 3 && n < 63)
-    door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
-    sleep 1
+  define :doorstep_1 do
+    cue :doorstep_1
+    horny_bass(8)
+    64.times do |n|
+      blades_mod(4) if n == 32
+      big_horn({}) if n%8 == 0
+      haus_bd(1)
+      door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
+      entourage(4) if n == 32
+      sleep 1
+    end
   end
-        pp(8, [
-          [:creaky_door, [1,3], {start: 0.26, finish: 0.29, pan: -0.7}],
-          [:creaky_door, [2,4], {start: 0.23, finish: 0.26, pan: 0.5}],
-          [:creaky_door, [6.5,7.5], {start: 0.225, finish: 0.24, pan: -0.2}]
-   ])
-end
 
-define :doorstep_all_in do
-  cue :doorstep_all_in
-  horny_bass(4)
-  windward_ramp(2)
-  entourage(4)
-  come_inside(2)
-  32.times do |n|
-    jingle_haus({amp: 1+(n/32)}) if n%8 == 4
-    big_horn({amp: 1.5}) if n%8 == 0
+  define :doorstep_2 do
+    cue :doorstep_2
+    blades(4)
+    horny_bass(4)
+    windward_ramp(2)
+    entourage(4)
+    32.times do |n|
+      big_horn({}) if n%8 == 0
+      haus_bd(1)
+      door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
+      sleep 1
+    end
+  end
+
+  define :go_away do
+    cue :go_away
+    horny_bass_ramp(16)
+    blades_mod(16)
+    come_inside(8)
+    haus_keys(8)
+    128.times do |n|
+      # haus_bd(0.5)
+      door_latch({start: 0.25, finish: 0.4, cutoff_dec: 1}) if n%2 == 1
+      entourage(8) if n == 32
+      if n%8 == 1
+        s = ring(0,0.75,0,0.75).tick
+        puts s, s+0.25
+        big_horn({start: s, finish: s+0.25, cutoff_dec: 1})
+      end
+
+      sleep 1
+    end
+  end
+
+  define :doorstep_fade do
+    cue :doorstep_fade
+    blades(3)
+    windward(4)
+    entourage(7)
+    horny_bass_fade(4)
+    64.times do |n|
+      puts n
+      haus_bd(1) if n < 62
+      fs = knit(0.25,4,0.5,4,0.75,4)
+      ss = knit(0,4,0.25,4,0.5,4)
+      big_horn({start: ss.tick, finish: fs.tick, cutoff_dec: 1}) if (n%7 == 3 && n < 63)
+      door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
+      sleep 1
+    end
+          pp(8, [
+            [:creaky_door, [1,3], {start: 0.26, finish: 0.29, pan: -0.7}],
+            [:creaky_door, [2,4], {start: 0.23, finish: 0.26, pan: 0.5}],
+            [:creaky_door, [6.5,7.5], {start: 0.225, finish: 0.24, pan: -0.2}]
+     ])
+    sleep 2
+  end
+
+  define :doorstep_all_in do
+    cue :doorstep_all_in
+    horny_bass(4)
+    windward_ramp(2)
+    entourage(4)
+    come_inside(2)
+    32.times do |n|
+      jingle_haus({amp: 1+(n/32)}) if n%8 == 4
+    big_horn({}) if n%8 == 0
     haus_bd(1)
-    shake_it_keys({amp: 1.5}) if (n%4 == 3 && n < 30)
-    door_latch({start: 0.25, finish: 0.4, rate: 1, amp: 1.5}) if n%2 == 1
+    door_latch({start: 0.25, finish: 0.4, rate: 1}) if n%2 == 1
     sleep 1
   end
   windward(1)
   pp(8,[
-       [:creaky_door, [1], {start: 0.23, finish: 0.4, amp: 1.5}]
+       [:creaky_door, [1], {start: 0.23, finish: 0.4}]
   ])
   sleep 8
 end
+
 
 #
 #
@@ -380,23 +382,29 @@ end
 #
 #
 uncomment do
-  garage_door_full
-  sleep 16
-  driveway
-  walkway
-  # sleep ?
-  doorstep_1
-  haus_bd(1)
-  animal_haus
-  sleep 4
-  jingle_haus(1)
-  4.times do
+  live_loop :garage do
+    garage_door_full
+    sleep 16
+    driveway
+    walkway
+    # sleep ?
+    doorstep_1
     haus_bd(1)
-    sleep 1
+    animal_haus
+    sleep 4
+    jingle_haus(1)
+    4.times do
+      haus_bd(1)
+      sleep 1
+    end
+    go_away
+    doorstep_2
+    doorstep_fade
+    doorstep_all_in
+    windward(1)
+    sleep 16
+    
+    # doorstep 1
+    # car sound dies our, or door creaking shut?
   end
-  go_away
-  doorstep_2
-  doorstep_fade
-  doorstep_all_in
-  sleep 16
 end
