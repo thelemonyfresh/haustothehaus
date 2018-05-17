@@ -260,7 +260,7 @@ define :driveway do
     end
     sleep 1
   end
-  
+
   with_fx :echo, phase: 1, decay: 4, amp: 1.6 do
     5.times do |n|
       door_latch({start: 0.25, finish: 1, rate: 0.3*(n+1)})
@@ -272,7 +272,7 @@ end
 
 define :walkway do
   cue :walkway
-  
+
   96.times do |n|
     big_horn({cutoff_dec: (1-(n/128.0))}) if n%8 == 0
     windward_ramp(1) if n == 80
