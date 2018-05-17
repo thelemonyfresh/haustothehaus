@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>haustothehaus: house music with house sounds</title>
+    <meta charset="UTF-8" />
+    <!-- <link rel="stylesheet" type="text/css" media="all" href="osc-view.css"></link> -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/osc/dist/osc-browser.min.js"></script>
+    <script type="text/javascript">
+
+     var port = new osc.WebSocketPort({
+       url: "ws://localhost:8081"
+     });
+
+     port.on("message", function (oscMessage) {
+       $("#message").text(JSON.stringify(oscMessage, undefined, 2));
+       console.log("message", oscMessage);
+     });
+
+     port.open();
+
+    </script>
+  </head>
+
+  <body>
+    <h1>haus</h1>
+
+    <div id="messageArea">
+      <p id="messageLabel">OSC Message:</p>
+      <pre id="message"></pre>
+    </div>
+  </body>
+</html>

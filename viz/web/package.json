@@ -1,0 +1,9 @@
+{
+    "name": "haus-viz",
+    "version": "0.0.1",
+    "ignore": [],
+    "dependencies": {
+        "osc": "2.2.1",
+        "jquery": "3.3.1"
+    }
+}

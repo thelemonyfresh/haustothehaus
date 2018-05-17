@@ -1,0 +1,9 @@
+{
+    "name": "haus-viz",
+    "main": "index.js",
+    "version": "0.0.1",
+    "dependencies": {
+        "osc": "2.2.1",
+        "ws": "5.1.1"
+    }
+}
