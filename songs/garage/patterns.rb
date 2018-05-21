@@ -29,6 +29,12 @@ define :entourage_times do |num_bars|
   end
 end
 
+define :big_horn do
+  sample haus_samps, "brown_horns_2", beat_stretch: 4
+end
+
+
+#### needs to be rewritten
 define :thorny_bass do
   s1 = 0.05
   s2 = 0.08

@@ -57,9 +57,6 @@ define :bass_horn_opts do |hsh|
  # end
 end
 
-define :big_horn do
-  sample haus_samps, "brown_horns_2", beat_stretch: 4
-end
 
 define :horny_bass do |len|
 
