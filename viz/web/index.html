@@ -40,6 +40,8 @@
      port.on("message", function (oscMessage) {
        console.log("showing");
        console.log(oscMessage);
+
+       /* msg ==*/
        if(oscMessage['address'] == '/logo/big-show'){
          $(".logo-big").show();
        }
@@ -53,10 +55,10 @@
          $(".logo-little").hide();
        }
        if(oscMessage['address'] == '/logo/little-animate'){
-         $(".logo-little").addClass("logo-little-animate");
+         $(".logo-little").addClass("logo/little-animate");
        }
        if(oscMessage['address'] == '/logo/little-animate-stop'){
-         $(".logo-little").removeClass("logo-little-animate");
+         $(".logo-little").removeClass("logo/little-animate");
        }
 
        console.log("message", oscMessage['address']);
