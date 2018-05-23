@@ -4,6 +4,31 @@
     <title>haustothehaus: house music with house sounds</title>
     <meta charset="UTF-8" />
     <!-- <link rel="stylesheet" type="text/css" media="all" href="osc-view.css"></link> -->
+    <style>
+     html, body { margin:0; padding:0; overflow:hidden }
+     svg { position:fixed; top:0; left:0; height:100%; width:100% }
+
+     .logo-little-animate {
+       animation: logo-little-animation 3.69s infinite
+     }
+
+     @keyframes logo-little-animation {
+       from {
+         transform: translateY(0);
+         transform-origin: top right;
+         animation-timing-function: linear;
+       }
+
+       to {
+         transform: translateY(100%);
+         transform-origin: top right;
+         animation-timing-function: linear;
+       }
+     }
+    </style>
+
+    </style>
+
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/osc/dist/osc-browser.min.js"></script>
     <script type="text/javascript">
@@ -14,11 +39,24 @@
 
      port.on("message", function (oscMessage) {
        console.log("showing");
+       console.log(oscMessage);
        if(oscMessage['address'] == '/logo/big-show'){
          $(".logo-big").show();
        }
        if(oscMessage['address'] == '/logo/big-hide'){
          $(".logo-big").hide();
+       }
+       if(oscMessage['address'] == '/logo/little-show'){
+         $(".logo-little").show();
+       }
+       if(oscMessage['address'] == '/logo/little-hide'){
+         $(".logo-little").hide();
+       }
+       if(oscMessage['address'] == '/logo/little-animate'){
+         $(".logo-little").addClass("logo-little-animate");
+       }
+       if(oscMessage['address'] == '/logo/little-animate-stop'){
+         $(".logo-little").removeClass("logo-little-animate");
        }
 
        console.log("message", oscMessage['address']);
@@ -31,9 +69,10 @@
   </head>
 
   <body>
-    <div class="logo-big">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 114 114">
-        <title>haus-haus-logo</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 114 114">
+      <title>haus-haus-logo</title>
+      <!-- big haus -->
+      <g class="logo-big">
         <rect y="48" width="8" height="24"/>
         <path d="M10,56h0a8,8,0,0,1,8,8v8a0,0,0,0,1,0,0H10a0,0,0,0,1,0,0V56A0,0,0,0,1,10,56Z"/>
         <path d="M30,56h8a0,0,0,0,1,0,0V72a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V56a0,0,0,0,1,0,0Z" transform="translate(68 128) rotate(-180)"/>
@@ -42,6 +81,10 @@
         <path d="M50,56h8a0,0,0,0,1,0,0v8a8,8,0,0,1-8,8h0a0,0,0,0,1,0,0V56A0,0,0,0,1,50,56Z"/>
         <path d="M64,60h8a0,0,0,0,1,0,0V76a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V60a0,0,0,0,1,0,0Z" transform="translate(0 136) rotate(-90)"/>
         <path d="M64,50h0a8,8,0,0,1,8,8v8a0,0,0,0,1,0,0H64a0,0,0,0,1,0,0V50A0,0,0,0,1,64,50Z" transform="translate(10 126) rotate(-90)"/>
+      </g>
+
+      <!-- little haus -->
+      <g class="logo-little">
         <rect x="76" y="42" width="4" height="12"/>
         <path d="M81,46h0a4,4,0,0,1,4,4v4a0,0,0,0,1,0,0H81a0,0,0,0,1,0,0V46A0,0,0,0,1,81,46Z"/>
         <path d="M91,46h4a0,0,0,0,1,0,0v8a0,0,0,0,1,0,0h0a4,4,0,0,1-4-4V46A0,0,0,0,1,91,46Z" transform="translate(186 100) rotate(180)"/>
@@ -50,7 +93,7 @@
         <path d="M101,46h4a0,0,0,0,1,0,0v4a4,4,0,0,1-4,4h0a0,0,0,0,1,0,0V46A0,0,0,0,1,101,46Z"/>
         <path d="M108,48h4a0,0,0,0,1,0,0v8a0,0,0,0,1,0,0h0a4,4,0,0,1-4-4V48A0,0,0,0,1,108,48Z" transform="translate(58 162) rotate(-90)"/>
         <path d="M108,43h0a4,4,0,0,1,4,4v4a0,0,0,0,1,0,0h-4a0,0,0,0,1,0,0V43A0,0,0,0,1,108,43Z" transform="translate(63 157) rotate(-90)"/>
-      </svg>
-    </div>
+      </g>
+    </svg>
   </body>
 </html>

@@ -10,6 +10,12 @@ define :gravel_bd do
        decay: 0.25,
        sustain: 0.07,
        release: 0.2
+
+  play :G1, amp: 0.4,
+       attack: 0.1, attack_level: 1.2,
+       decay: 0.25,
+       sustain: 0.1,
+       release: 0.1
 end
 
 define :garage_door do
@@ -58,8 +64,12 @@ define :creaky_door do
 
 end
 
-define :haus_keys do
+define :keys do
+  sample haus_samps, "keyring", beat_stretch: 8
+end
 
+define :haus_keys do
+  sample haus_samps, "keyring", onset: tick(:os)
 end
 
 define :windward do
