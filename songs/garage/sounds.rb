@@ -73,7 +73,9 @@ define :keys do
 end
 
 define :haus_keys do
-  sample haus_samps, "keyring", onset: tick(:os)
+  with_fx :compressor, threshold: 0.9, slope_above: 1, slope_below: 0.8 do
+    sample haus_samps, "keyring", onset: tick(:os)
+  end
   in_thread do
     osc "/logo/little-show"
     sleep 0.25

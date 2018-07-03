@@ -42,56 +42,46 @@ define :sub_bass do
     use_synth :fm
     hd = 16
 
-    s = play :C2, amp: 1, note_slide: 0.07,
+    # 0.25, 0.25
+    #  divisor: 0.25,
+    #  depth: 0.25, depth_slide: 8
+    s = play :C2, amp: 0.6, note_slide: 0.07,
              attack: 0.25, decay: 2, sustain: 8, release: 6,
              cutoff: 110, cutoff_slide: 8,
-             divisor: 2,
-             depth: 0.6, depth_slide: 16
-    control s, depth: 1
+             divisor: 0.125, divisor_slide: 6,
+             depth: 0.25, depth_slide: 8
+    control s, depth: 2 #make this a controllable param relative to 1
+    #control s, divisor: 0.25
     sleep 6
     control s, note: :F2
     sleep 2
+    control s, depth: 0.25
     control s, note: :G1
     sleep 8
   end
 
 end
 
-define :thorny_bass_at do |amt|
+define :thorny_melody_at do |amt|
   in_thread do
-    use_synth :dpulse # work on this sound a bit -- should be more like the horns
-    co = 130
-    pw = 0.3
+    use_synth :tb303
 
-    with_fx :lpf, cutoff: co do
-      use_transpose +12
-
-      num_notes = (amt*7).round
-      nts = ring(:C3, :Cs3, :E3, :E3, :F3, :G3, :F3).take(num_notes)
-      lns = ring(2,1.5,1,0.5,1,1,1).take(num_notes)
-      hds = ring(2,2,0.5,0.75, 1, 1, 1).take(num_notes)
+    nts = chord(:C4, :major7).take((amt*4).to_i)
+    in_thread do
       nts.each do |n|
-        hd = hds.tick(:holds)
-        horny_bass(n, hd)
-        sleep lns.tick(:lens)
+        play n, amp: 0.5,
+             attack: 0.05, decay: 0.05, decay_level: 0.8, release: 0.25,
+             res: 0.125, wave: 1, pulse_width: 0.4,
+             cutoff: 100, cutoff_attack: 0.15
+        sleep ring(1.5, 1,1.5,1).tick
       end
-      sleep (8 - lns.reduce(:+))
-
-      num_notes1 = (amt*6).round
-      nts1 = ring(:G3, :F3, :E3, :E3, :Cs3, :C3).take(num_notes1)
-      lns1 = ring(2,1.5,1,0.5,1,1).take(num_notes1)
-      hds1 = ring(2,2,0.5,0.75, 1, 1).take(num_notes1)
-
-      nts1.each do |n|
-        hd = hds1.tick(:holds1)
-        horny_bass(n, hd)
-        sleep lns1.tick(:lens1)
-      end
-      sleep (8 - lns1.reduce(:+))
     end
+
+
+    sleep 8
   end
 end
 
-define :thorny_bass do
-  thorny_bass_at(1)
+define :thorny_melody do
+  thorny_melody_at(1)
 end

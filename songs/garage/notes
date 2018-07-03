@@ -1,0 +1,25 @@
+# garage_door -> car -> entourage -> keys -> gravel_bd -> all out to just keys/car/sub fades in
+
+use_bpm 130
+
+
+###### NOTES ######
+###### NOTES ######
+###### NOTES ######
+###### NOTES ######
+###### NOTES ######
+# take out the bass drum to introduce the bassline, breakdown into melodies
+# transitions should be one element at a time, major things take up to 16 bars
+# unfold the melody a few notes at a time_warp
+# other songs have a more regular dropped kick drum in an obvious place
+
+
+# let the grooves sink in a bit more, only a gradual change at a time, c.f. want you forever carl cox
+# better use of repeating initialism of sample, end part of sample later
+# off-beat melody part is more what I'm going for...
+
+  # with_fx :slicer, phase: 0.5, probability: 0.5 do
+  #   with_fx :ixi_techno do
+  #     entourage
+  #   end
+  # end
