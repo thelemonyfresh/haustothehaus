@@ -37,6 +37,8 @@ end
 
 
 define :sub_bass do
+
+  # define at that has just 1 beat of sub bass
   in_thread do
     #use_synth :beep
     use_synth :fm
@@ -45,7 +47,7 @@ define :sub_bass do
     # 0.25, 0.25
     #  divisor: 0.25,
     #  depth: 0.25, depth_slide: 8
-    s = play :C2, amp: 0.6, note_slide: 0.07,
+    s = play :C2, amp: 0.8, note_slide: 0.07,
              attack: 0.25, decay: 2, sustain: 8, release: 6,
              cutoff: 110, cutoff_slide: 8,
              divisor: 0.125, divisor_slide: 6,
@@ -66,6 +68,7 @@ define :thorny_melody_at do |amt|
   in_thread do
     use_synth :tb303
 
+    sleep 0.5
     nts = chord(:C4, :major7).take((amt*4).to_i)
     in_thread do
       nts.each do |n|
@@ -78,10 +81,13 @@ define :thorny_melody_at do |amt|
     end
 
 
-    sleep 8
+    sleep 7.5
   end
 end
 
 define :thorny_melody do
   thorny_melody_at(1)
 end
+
+# haus_keys_drop
+#   three quick ones at the end

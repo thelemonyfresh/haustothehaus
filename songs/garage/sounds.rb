@@ -17,12 +17,10 @@ define :gravel_bd do
        sustain: 0.1,
        release: 0.1
 
-  in_thread do
-    osc "/logo/big-show"
-    sleep 0.5
-    osc "/logo/big-hide"
-    sleep 0.5
-  end
+  puts  '.big-haus.h'
+
+  flash '.big-haus', 0.5
+  #flash %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:little), 0.5
 end
 
 define :garage_door do
@@ -74,14 +72,9 @@ end
 
 define :haus_keys do
   with_fx :compressor, threshold: 0.9, slope_above: 1, slope_below: 0.8 do
-    sample haus_samps, "keyring", onset: tick(:os)
+    sample haus_samps, "keyring", onset: range(0,8,1).tick(:os)
   end
-  in_thread do
-    osc "/logo/little-show"
-    sleep 0.25
-    osc "/logo/little-hide"
-    sleep 0.75
-  end
+  flash  '.s', 0.5
 end
 
 define :windward do

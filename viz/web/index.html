@@ -3,99 +3,49 @@
   <head>
     <title>haustothehaus: house music with house sounds</title>
     <meta charset="UTF-8" />
-    <!-- <link rel="stylesheet" type="text/css" media="all" href="osc-view.css"></link> -->
-    <style>
-     html, body { margin:0; padding:0; overflow: hidden; background-color: black; }
-     svg { position:fixed; top:0; left:0; height:100%; width:100% }
-
-     .logo-big, .logo-little {
-       fill: #f9de2a;
-     }
-
-     .logo-little-animate {
-       animation: logo-little-animation 3.69s infinite
-     }
-
-     @keyframes logo-little-animation {
-       from {
-         transform: translateY(0);
-         transform-origin: top right;
-         animation-timing-function: linear;
-       }
-
-       to {
-         transform: translateY(100%);
-         transform-origin: top right;
-         animation-timing-function: linear;
-       }
-
-     }
-    </style>
-
+    <link rel="stylesheet" type="text/css" media="all" href="styles.css"/>
     <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/2.0.3/velocity.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/velocity/2.0.3/velocity.ui.min.js"></script>
     <script src="node_modules/osc/dist/osc-browser.min.js"></script>
-    <script type="text/javascript">
-
-     var port = new osc.WebSocketPort({
-       url: "ws://localhost:8081"
-     });
-
-     port.on("message", function (oscMessage) {
-       console.log("showing");
-       console.log(oscMessage);
-
-       /* msg ==*/
-       if(oscMessage['address'] == '/logo/big-show'){
-         $(".logo-big").show();
-       }
-       if(oscMessage['address'] == '/logo/big-hide'){
-         $(".logo-big").hide();
-       }
-       if(oscMessage['address'] == '/logo/little-show'){
-         $(".logo-little").show();
-       }
-       if(oscMessage['address'] == '/logo/little-hide'){
-         $(".logo-little").hide();
-       }
-       if(oscMessage['address'] == '/logo/little-animate'){
-         $(".logo-little").addClass("logo/little-animate");
-       }
-       if(oscMessage['address'] == '/logo/little-animate-stop'){
-         $(".logo-little").removeClass("logo/little-animate");
-       }
-
-       console.log("message", oscMessage['address']);
-     });
-
-     port.open();
-
-     $(".logo-big").hide();
-    </script>
+    <script src="animation.js"></script>
   </head>
 
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 114 114">
-      <title>haus-haus-logo</title>
+      <title>haus-haus</title>
       <!-- big haus -->
-      <g class="logo-big" style="display: none;">
+      <g class="big-haus h">
         <rect y="48" width="8" height="24"/>
         <path d="M10,56h0a8,8,0,0,1,8,8v8a0,0,0,0,1,0,0H10a0,0,0,0,1,0,0V56A0,0,0,0,1,10,56Z"/>
+      </g>
+      <g class="big-haus a">
         <path d="M30,56h8a0,0,0,0,1,0,0V72a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V56a0,0,0,0,1,0,0Z" transform="translate(68 128) rotate(-180)"/>
         <path d="M20,56h0a8,8,0,0,1,8,8v0a8,8,0,0,1-8,8h0a0,0,0,0,1,0,0V56A0,0,0,0,1,20,56Z" transform="translate(48 128) rotate(-180)"/>
+      </g>
+      <g class="big-haus u">
         <path d="M40,56h8a0,0,0,0,1,0,0V72a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V56a0,0,0,0,1,0,0Z"/>
         <path d="M50,56h8a0,0,0,0,1,0,0v8a8,8,0,0,1-8,8h0a0,0,0,0,1,0,0V56A0,0,0,0,1,50,56Z"/>
+      </g>
+      <g class="big-haus s">
         <path d="M64,60h8a0,0,0,0,1,0,0V76a0,0,0,0,1,0,0h0a8,8,0,0,1-8-8V60a0,0,0,0,1,0,0Z" transform="translate(0 136) rotate(-90)"/>
         <path d="M64,50h0a8,8,0,0,1,8,8v8a0,0,0,0,1,0,0H64a0,0,0,0,1,0,0V50A0,0,0,0,1,64,50Z" transform="translate(10 126) rotate(-90)"/>
       </g>
 
       <!-- little haus -->
-      <g class="logo-little" style="display: none;">
+      <g class="little-haus h">
         <rect x="76" y="42" width="4" height="12"/>
         <path d="M81,46h0a4,4,0,0,1,4,4v4a0,0,0,0,1,0,0H81a0,0,0,0,1,0,0V46A0,0,0,0,1,81,46Z"/>
+      </g>
+      <g class="little-haus a">
         <path d="M91,46h4a0,0,0,0,1,0,0v8a0,0,0,0,1,0,0h0a4,4,0,0,1-4-4V46A0,0,0,0,1,91,46Z" transform="translate(186 100) rotate(180)"/>
         <path d="M86,46h0a4,4,0,0,1,4,4v0a4,4,0,0,1-4,4h0a0,0,0,0,1,0,0V46A0,0,0,0,1,86,46Z" transform="translate(176 100) rotate(-180)"/>
+      </g>
+      <g class="little-haus u">
         <path d="M96,46h4a0,0,0,0,1,0,0v8a0,0,0,0,1,0,0h0a4,4,0,0,1-4-4V46A0,0,0,0,1,96,46Z"/>
         <path d="M101,46h4a0,0,0,0,1,0,0v4a4,4,0,0,1-4,4h0a0,0,0,0,1,0,0V46A0,0,0,0,1,101,46Z"/>
+      </g>
+      <g class="little-haus s">
         <path d="M108,48h4a0,0,0,0,1,0,0v8a0,0,0,0,1,0,0h0a4,4,0,0,1-4-4V48A0,0,0,0,1,108,48Z" transform="translate(58 162) rotate(-90)"/>
         <path d="M108,43h0a4,4,0,0,1,4,4v4a0,0,0,0,1,0,0h-4a0,0,0,0,1,0,0V43A0,0,0,0,1,108,43Z" transform="translate(63 157) rotate(-90)"/>
       </g>

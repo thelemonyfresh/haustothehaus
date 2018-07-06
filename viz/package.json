@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "dependencies": {
         "osc": "2.2.1",
+        "velocity-animate": "^2.0.5",
         "ws": "5.1.1"
     }
 }

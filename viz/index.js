@@ -21,12 +21,9 @@ var getIPAddresses = function () {
     return ipAddresses;
 };
 
-// maybe I can remove one of these? do not need to send, at least...
 var udp = new osc.UDPPort({
     localAddress: "0.0.0.0",
-    localPort: 7400,
-    remoteAddress: "127.0.0.1",
-    remotePort: 7500
+    localPort: 7400
 });
 
 udp.on("ready", function () {
@@ -35,7 +32,6 @@ udp.on("ready", function () {
     ipAddresses.forEach(function (address) {
         console.log(" Host:", address + ", Port:", udp.options.localPort);
     });
-    console.log("Broadcasting OSC over UDP to", udp.options.remoteAddress + ", Port:", udp.options.remotePort);
 });
 
 udp.open();
