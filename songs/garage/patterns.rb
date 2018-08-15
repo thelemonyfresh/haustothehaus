@@ -37,17 +37,19 @@ end
 
 
 define :sub_bass do
-
+ #this should be 64 beats long
   # define at that has just 1 beat of sub bass
   in_thread do
     #use_synth :beep
     use_synth :fm
     hd = 16
+    chrd = chord(:Fs1, :major)
+    chrd1 = chord(:Fs2, :major)
 
     # 0.25, 0.25
     #  divisor: 0.25,
     #  depth: 0.25, depth_slide: 8
-    s = play :C2, amp: 0.8, note_slide: 0.07,
+    s = play chrd1[0], amp: 0.8, note_slide: 0.07,
              attack: 0.25, decay: 2, sustain: 8, release: 6,
              cutoff: 110, cutoff_slide: 8,
              divisor: 0.125, divisor_slide: 6,
@@ -55,10 +57,10 @@ define :sub_bass do
     control s, depth: 2 #make this a controllable param relative to 1
     #control s, divisor: 0.25
     sleep 6
-    control s, note: :F2
+    control s, note: chrd1[1]
     sleep 2
     control s, depth: 0.25
-    control s, note: :G1
+    control s, note: chrd[1]
     sleep 8
   end
 
@@ -69,14 +71,15 @@ define :thorny_melody_at do |amt|
     use_synth :tb303
 
     sleep 0.5
-    nts = chord(:C4, :major7).take((amt*4).to_i)
+    nts = chord(:A4, :major7).take((amt*4).to_i)
+    #nts =
     in_thread do
       nts.each do |n|
         play n, amp: 0.5,
              attack: 0.05, decay: 0.05, decay_level: 0.8, release: 0.25,
              res: 0.125, wave: 1, pulse_width: 0.4,
              cutoff: 100, cutoff_attack: 0.15
-        sleep ring(1.5, 1,1.5,1).tick
+        sleep knit(0.25,4).tick
       end
     end
 

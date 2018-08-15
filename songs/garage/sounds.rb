@@ -37,9 +37,8 @@ end
 
 define :car_door_close do
   #takes 8 beats, door close on 5
-
   sample haus_samps, "car",
-         start: 0.10795, finish: 0.16945
+         start: 0.1068, finish: 0.1695
 end
 
 define :big_horn do
@@ -71,14 +70,19 @@ define :keys do
 end
 
 define :haus_keys do
-  with_fx :compressor, threshold: 0.9, slope_above: 1, slope_below: 0.8 do
-    sample haus_samps, "keyring", onset: range(0,8,1).tick(:os)
+  with_fx :tanh, mix: range(0, 1, 0.125).ramp.tick(:haus_keys_ramp) do
+    with_fx :compressor, threshold: 0.9, slope_above: 1, slope_below: 0.8 do
+      sample haus_samps, "keyring", onset: range(0,8,1).tick(:os)
+    end
   end
   flash  '.s', 0.5
 end
 
 define :windward do
-
+  #with_fx :pitch_shift, pitch: -4*12, pitch_dis: 0.01, time_dis: 0.1 do
+  with_fx :whammy, transpose: -3*12 do
+    sample haus_samps, 'winds', attack: 65, decay: 65, sustain: 65, release: 65
+  end
 end
 
 #drop down to just creaky door and keys
