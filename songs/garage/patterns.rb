@@ -66,30 +66,44 @@ define :sub_bass do
 
 end
 
-define :thorny_melody_at do |amt|
-  in_thread do
-    use_synth :tb303
+define :thorny_at do |amt|
+  use_synth :tb303
+  amt = 0.6 + amt * 0.4
 
-    sleep 0.5
-    nts = chord(:A4, :major7).take((amt*4).to_i)
-    #nts =
-    in_thread do
-      nts.each do |n|
-        play n, amp: 0.5,
-             attack: 0.05, decay: 0.05, decay_level: 0.8, release: 0.25,
-             res: 0.125, wave: 1, pulse_width: 0.4,
-             cutoff: 100, cutoff_attack: 0.15
-        sleep knit(0.25,4).tick
+  in_thread do
+    puts get(:knob_15_state)
+    puts get(:knob_16_state)
+
+    with_fx :bpf, res: 0.4251968 do
+      with_fx :reverb, room: 0.7165354 do
+        arr = []
+        [28, 15, 35, 19].each do |n|
+          coa = [100*amt,
+                 100*(amt**3),
+                 100,
+                 100*amt**2]
+          co = coa.ring.tick
+
+          play n, attack: 0.0445, decay: 0.0445, sustain: 0.0445, release: 0.0445, res: 0.9213, cutoff: co, wave: 1, pulse: 0.1102, center: 28
+          sleep 0.25
+        end
+        puts arr
+
+        # XTOUCH
+        ##| attack: 0.25*l, decay: 0.25*l, sustain: 0.25*l, release: 0.25*l,
+        ##| res: 0.9+0.1*get(:knob_18_state),
+        ##| cutoff: 100,
+        ##| wave: 1,
+        ##| pulse: get(:knob_17_state),
+        ##| center: nt
+
       end
     end
-
-
-    sleep 7.5
   end
 end
 
-define :thorny_melody do
-  thorny_melody_at(1)
+define :thorny do
+  thorny_at(1)
 end
 
 # haus_keys_drop
