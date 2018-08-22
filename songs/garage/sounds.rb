@@ -17,10 +17,10 @@ define :gravel_bd do
        sustain: 0.1,
        release: 0.1
 
-  puts  '.big-haus.h'
+#  puts  '.big-haus.h'
 
-  flash '.big-haus', 0.5
-  #flash %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:little), 0.5
+  #flash '.big-haus.h', 0.5
+ flash %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:big), 0.5
 end
 
 define :garage_door do
@@ -75,8 +75,9 @@ define :haus_keys do
       sample haus_samps, "keyring", onset: range(0,8,1).tick(:os)
     end
   end
-  flash  '.s', 0.5
-end
+  flash '.little-haus', 0.25
+  #flash %w(.h .a .u .s).map { |l| '.little-haus' + l }.ring.tick(:little), 0.5
+  end
 
 define :windward do
   #with_fx :pitch_shift, pitch: -4*12, pitch_dis: 0.01, time_dis: 0.1 do

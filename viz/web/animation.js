@@ -3,7 +3,6 @@ var port = new osc.WebSocketPort({
 });
 
 function sleep(ms) {
-  return
 }
 
 port.on("message", async function (oscMessage) {
@@ -13,11 +12,11 @@ port.on("message", async function (oscMessage) {
     console.log(duration);
     console.log(selector);
 
-    // $(selector).show();
-    // await new Promise(resolve => setTimeout(resolve, duration));
-    // $(selector).hide();
+    $(selector).show();
+    await new Promise(resolve => setTimeout(resolve, duration));
+    $(selector).hide();
 
-    $(selector).velocity({ "color" : "red" });
+    // $(selector).velocity({ "color" : "red" });
   }
 
 
