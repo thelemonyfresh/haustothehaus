@@ -36,35 +36,29 @@ define :entourage_times do |num_bars|
 end
 
 
-define :sub_bass do
+define :sub_bass_at do |n|
  #this should be 64 beats long
-  # define at that has just 1 beat of sub bass
   in_thread do
     #use_synth :beep
     use_synth :fm
     hd = 16
-    chrd = chord(:Fs1, :major)
-    chrd1 = chord(:Fs2, :major)
+    chrds = [31, 35, 28, 27].map{ |n| n + 12 }
 
-    # 0.25, 0.25
-    #  divisor: 0.25,
-    #  depth: 0.25, depth_slide: 8
-    s = play chrd1[0], amp: 0.8, note_slide: 0.07,
-             attack: 0.25, decay: 2, sustain: 8, release: 6,
-             cutoff: 110, cutoff_slide: 8,
-             divisor: 0.125, divisor_slide: 6,
-             depth: 0.25, depth_slide: 8
-    control s, depth: 2 #make this a controllable param relative to 1
-    #control s, divisor: 0.25
-    sleep 6
-    control s, note: chrd1[1]
+    s = play chrds.tick, amp: 0.7, note_slide: 0.07,
+             attack: 0.25, decay: 2, sustain: 8, release: 6
+
+    sleep 5.93
+    control s, note: chrds.tick if n > 0.7
     sleep 2
-    control s, depth: 0.25
-    control s, note: chrd[1]
-    sleep 8
-  end
+    control s, note: chrds.tick if n > 0.4
 
+  end
 end
+
+define :sub_bass do
+  sub_bass_at(0.5)
+end
+
 
 define :thorny_at do |amt|
   use_synth :tb303
