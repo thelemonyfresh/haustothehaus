@@ -17,10 +17,7 @@ define :gravel_bd do
        sustain: 0.1,
        release: 0.1
 
-#  puts  '.big-haus.h'
-
-  #flash '.big-haus.h', 0.5
- flash %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:big), 0.5
+  pulse %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:big), 0.5
 end
 
 define :garage_door do
@@ -39,6 +36,16 @@ define :car_door_close do
   #takes 8 beats, door close on 5
   sample haus_samps, "car",
          start: 0.1068, finish: 0.1695
+  rotate '.a.little-haus', 1, 5
+  at 0.9 do
+    rotate '.a.little-haus', 1, -5
+  end
+  at 1.85 do
+    rotate '.a.little-haus', 1.75, -15
+  end
+  at 4 do
+    rotate '.a.little-haus', 0.25, 0
+  end
 end
 
 define :big_horn do
@@ -75,7 +82,8 @@ define :haus_keys do
       sample haus_samps, "keyring", onset: range(0,8,1).tick(:os)
     end
   end
-  flash '.little-haus', 0.25
+  flash '.little-haus', 0.3
+
   #flash %w(.h .a .u .s).map { |l| '.little-haus' + l }.ring.tick(:little), 0.5
   end
 

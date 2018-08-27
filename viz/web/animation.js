@@ -6,12 +6,13 @@ function sleep(ms) {
 }
 
 port.on("message", async function (oscMessage) {
-  var [,duration,selector,actionType] = oscMessage.address.split('/');
+  var [,duration,selector,actionType,amount] = oscMessage.address.split('/');
+  console.log("ActionType: " + actionType);
+  console.log("Duration: " + duration);
+  console.log("Selector: " + selector);
+  console.log("Amount1: " + amount);
 
   if (actionType == 'flash') {
-    console.log(duration);
-    console.log(selector);
-
     $(selector).show();
     await new Promise(resolve => setTimeout(resolve, duration));
     $(selector).hide();
@@ -19,8 +20,29 @@ port.on("message", async function (oscMessage) {
     // $(selector).velocity({ "color" : "red" });
   }
 
+  if (actionType == 'pulse') {
+    $(selector).fadeIn(duration/2);
+    await new Promise(resolve => setTimeout(resolve, duration/2));
+    $(selector).fadeOut(duration/2);
+  }
 
+  if (actionType == 'rotate') {
+    $(selector).animate({deg: amount}, {
+      duration: duration,
+      step: function(now) {
+        // in the step-callback (that is fired each step of the animation),
+        // you can use the `now` paramter which contains the current
+        // animation-position (`0` up to `angle`)
+        $(selector).css({
+          transform: 'rotate(' + now + 'deg)'
+        });
+      }
+    });
+  }
 
+  if (actionType == 'translateX') {
+    $(selector).animate({ top: '-=' + amount + 'px' }, duration);
+  }
 
   console.log(oscMessage.address.split('/'));
   // console.log("message", oscMessage['address']);
