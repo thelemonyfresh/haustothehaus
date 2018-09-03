@@ -17,7 +17,7 @@ define :gravel_bd do
        sustain: 0.1,
        release: 0.1
 
-  pulse %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:big), 0.5
+  pulse %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:big), 0.75
 end
 
 define :garage_door do
@@ -82,7 +82,7 @@ define :haus_keys do
       sample haus_samps, "keyring", onset: range(0,8,1).tick(:os)
     end
   end
-  flash '.little-haus', 0.3
+  flash '.little-haus.s', 0.3
 
   #flash %w(.h .a .u .s).map { |l| '.little-haus' + l }.ring.tick(:little), 0.5
   end

@@ -1,5 +1,5 @@
 define :entourage do
-  amp = range(0.125,1,0.125).tick(:entourage_amp)
+  amp = range(0.125,1,0.125).ramp.tick(:entourage_amp)
   puts "amp: #{amp}"
 
   in_thread do
@@ -72,12 +72,24 @@ define :sub_bass_at do |n|
     chrds = [31, 35, 28, 27].map{ |n| n + 12 }
 
     s = play chrds.tick, amp: 0.7, amp_slide: 4, note_slide: 0.07,
-             attack: 0.25, decay: 2, sustain: 8, release: 6
+             attack: 0.01, decay: 2, sustain: 8, release: 6,
+             cutoff: 120, cutoff_slide: 0.75
     #rotate '.big-haus', 8, (chrds.look - 45)*-5
-    sleep 5.93
+    sleep 0.5
+    2.times do
+      control s, cutoff: 10 unless n > 0.7
+      sleep 0.75
+      control s, cutoff: 130 unless n > 0.7
+      sleep 0.75
+    end
+    control s, cutoff: 100
+    sleep 1.5
+    sleep 0.93
+    control s, cutoff: 120
     control s, amp: 0 if n < 0.4
     control s, note: chrds.tick if n > 0.7
     #rotate '.big-haus', 8, (chrds.look - 46)*-5  if n > 0.7
+
     sleep 2
     control s, note: chrds.tick if n > 0.4
     #rotate '.big-haus', 8, (chrds.look - 46)*15  if n > 0.7
