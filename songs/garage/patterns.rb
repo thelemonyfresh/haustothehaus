@@ -74,38 +74,56 @@ define :sub_bass_at do |n|
     s = play chrds.tick, amp: 0.7, amp_slide: 4, note_slide: 0.07,
              attack: 0.01, decay: 2, sustain: 8, release: 6,
              cutoff: 120, cutoff_slide: 0.75
-    #rotate '.big-haus', 8, (chrds.look - 45)*-5
+
+    note_length = n > 0.7 ? 4 : 0.4
+    ##color '.big-haus', 0.45, 'sonic_green'
     sleep 0.5
     2.times do
-      control s, cutoff: 10 unless n > 0.7
+      unless n > 0.7
+        #color '.big-haus', 0.7, 'haus_yellow'
+        control s, cutoff: 10
+      end
       sleep 0.75
-      control s, cutoff: 130 unless n > 0.7
+
+      unless n > 0.7
+        #color '.big-haus', 0.5, 'sonic_green'
+        control s, cutoff: 130
+      end
       sleep 0.75
     end
     control s, cutoff: 100
     sleep 1.5
     sleep 0.93
+
     control s, cutoff: 120
-    control s, amp: 0 if n < 0.4
-    control s, note: chrds.tick if n > 0.7
-    #rotate '.big-haus', 8, (chrds.look - 46)*-5  if n > 0.7
+    if n < 0.4
+      control s, amp: 0
+      #color '.big-haus', 4, 'haus_yellow'
+    end
+    if n > 0.7
+      control s, note: chrds.tick
+      #color '.big-haus', 0.07, 'sonic_blue'
+    end
 
     sleep 2
-    control s, note: chrds.tick if n > 0.4
-    #rotate '.big-haus', 8, (chrds.look - 46)*15  if n > 0.7
+    if n > 0.4
+      control s, note: chrds.tick
+      #color '.big-haus', 0.5, 'sonic_pink'
+    end
     sleep 2
-    #rotate '.big-haus', 8, 0
+
+    #color '.big-haus', 6, 'haus_yellow'
   end
 end
 
 define :sub_bass do
-  sub_bass_at(0.75)
+  sub_bass_at(0.1)
 end
 
 
-define :thorny_at do |amt|
+define :thorny_at do |base_amt|
   use_synth :tb303
-  amt = 0.6 + amt * 0.4
+  amt = 0.5 + base_amt * 0.5
 
   in_thread do
     with_fx :bpf, res: 0.4251968 do
@@ -126,17 +144,24 @@ define :thorny_at do |amt|
   end
 
   in_thread do
-    rotate '.u.little-haus', 0.25, -2*amt
+    colors = %w(sonic_green sonic_blue sonic_pink).ring
+
+    color '.little-haus.h', 0.25, colors[(base_amt*2.9).to_i] if base_amt > 0.1
     sleep 0.25
-    rotate '.u.little-haus', 0.25, 0
-    rotate '.s.little-haus', 0.25, -2*amt
+    color '.little-haus.a', 0.25, colors[(base_amt*2.9).to_i] if base_amt > 0.4
     sleep 0.25
-    rotate '.s.little-haus', 0.25, 0
+    color '.little-haus.u', 0.25, colors[(base_amt*2.9).to_i]
+    sleep 0.25
+    color '.little-haus.s', 0.25, colors[(base_amt*2.9).to_i] if base_amt > 0.6
+    sleep 0.25
+
+    sleep 2
+    color '.little-haus', 2, 'haus_yellow'
   end
 end
 
 define :thorny do
-  thorny_at(0.3)
+  thorny_at(0)
 end
 
 # haus_keys_drop

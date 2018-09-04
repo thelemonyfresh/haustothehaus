@@ -1,33 +1,38 @@
+// Set up and connect to the web socket
 var port = new osc.WebSocketPort({
   url: "ws://localhost:8081"
 });
+port.open();
 
-function sleep(ms) {
-}
-
+// catch and process osc messages
 port.on("message", async function (oscMessage) {
-  var [,duration,selector,actionType,amount] = oscMessage.address.split('/');
+  var [,duration,selector,actionType,val1] = oscMessage.address.split('/');
   console.log("ActionType: " + actionType);
   console.log("Duration: " + duration);
   console.log("Selector: " + selector);
-  console.log("Amount1: " + amount);
+  console.log("Val1: " + val1);
 
   if (actionType == 'flash') {
     $(selector).show();
-    await new Promise(resolve => setTimeout(resolve, duration));
+    await sleep(duration);
     $(selector).hide();
-
-    // $(selector).velocity({ "color" : "red" });
   }
 
   if (actionType == 'pulse') {
-    $(selector).fadeIn(duration/2);
-    await new Promise(resolve => setTimeout(resolve, duration/2));
-    $(selector).fadeOut(duration/2);
+    $(selector).velocity({ opacity: 0 }, {
+      duration: duration/4,
+      easing: 'easeOutCubix',
+      queue: 'false'
+    });
+    await sleep(duration/2);
+    $(selector).velocity({ opacity: 1 },
+                         { duration: 3*duration/2,
+                           queue: 'false'
+                         });
   }
 
   if (actionType == 'rotate') {
-    $(selector).animate({deg: amount}, {
+    $(selector).animate({deg: val1}, {
       duration: duration,
       step: function(now) {
         // in the step-callback (that is fired each step of the animation),
@@ -40,16 +45,20 @@ port.on("message", async function (oscMessage) {
     });
   }
 
-  if (actionType == 'translateX') {
-    $(selector).animate({ top: '-=' + amount + 'px' }, duration);
+  if (actionType == 'color') {
+    $(selector).velocity({fill: val1 },
+                         { duration: duration,
+                           easing: 'easeOutCirc',
+                           queue: 'false'
+                         });
   }
-
-  console.log(oscMessage.address.split('/'));
-  // console.log("message", oscMessage['address']);
 });
 
-port.open();
 
 // BD should step through the first haus, keys through the second
 // sub bass should swell the size of the large haus, thorny_melody should swell the second
 //
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

@@ -82,19 +82,20 @@ define :haus_keys do
       sample haus_samps, "keyring", onset: range(0,8,1).tick(:os)
     end
   end
-  flash '.little-haus.s', 0.3
+  pulse '.little-haus.s', 0.25
 
   #flash %w(.h .a .u .s).map { |l| '.little-haus' + l }.ring.tick(:little), 0.5
   end
 
-define :windward do
+define :windward_at do |amt|
   #with_fx :pitch_shift, pitch: -4*12, pitch_dis: 0.01, time_dis: 0.1 do
   with_fx :whammy, transpose: -3*12 do
-    sample haus_samps, 'winds', attack: 65, decay: 65, sustain: 65, release: 65
+    sample haus_samps, 'winds', amp: amt,
+           start: 0.0, finish: 0.1, beat_stretch: 640,
+           attack: 8, decay: 16, sustain: 16, release: 16
   end
 end
 
-#drop down to just creaky door and keys
-define :creaky_door do
-
+define :windward do
+  windward_at(0.5)
 end
