@@ -21,9 +21,13 @@ end
 
 define :color do |selector, beats, color|
   color = '#d6117a' if color == 'sonic_pink'
-  color = '#5cc639'if color == 'sonic_green'
-  color = '#3a62c1'if color == 'sonic_blue'
+  color = '#5cc639' if color == 'sonic_green'
+  color = '#3a62c1' if color == 'sonic_blue'
   color = '#f9de2a' if color == 'haus_yellow'
 
   viz 'color', selector, beats, color
+end
+
+define :tick_key do
+  %w(h a u s).pick(16).join
 end

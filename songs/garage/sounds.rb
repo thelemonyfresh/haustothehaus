@@ -36,16 +36,19 @@ define :car_door_close do
   #takes 8 beats, door close on 5
   sample haus_samps, "car",
          start: 0.1068, finish: 0.1695
-  rotate '.a.little-haus', 1, 5
-  at 0.9 do
-    rotate '.a.little-haus', 1, -5
+  if tick(:car_door_time) < 4
+    rotate '.a.little-haus', 1, 5
+    at 0.9 do
+      rotate '.a.little-haus', 1, -5
+    end
+    at 1.85 do
+      rotate '.a.little-haus', 1.75, -15
+    end
+    at 4 do
+      rotate '.a.little-haus', 0.25, 0
+    end
   end
-  at 1.85 do
-    rotate '.a.little-haus', 1.75, -15
-  end
-  at 4 do
-    rotate '.a.little-haus', 0.25, 0
-  end
+
 end
 
 define :big_horn do
@@ -66,9 +69,10 @@ end
 
 define :animal_house do
   with_fx :gverb, damp: 0.98, pre_damp: 1, room: 9 do
-    sample haus_samps, "house_stonemason",
+    s = sample haus_samps, "house_stonemason", pan: 0.25, pan_slide: 2,
            start: 0.0236, finish: 0.9449, attack: 0.2205, decay: 0.5354, beat_stretch: 4, amp: 0.5,
            cutoff: 100
+    control s, pan: -0.5
   end
 end
 

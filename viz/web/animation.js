@@ -22,12 +22,12 @@ port.on("message", async function (oscMessage) {
     $(selector).velocity({ opacity: 0 }, {
       duration: duration/4,
       easing: 'easeOutCubix',
-      queue: 'false'
+      queue: false
     });
     await sleep(duration/2);
     $(selector).velocity({ opacity: 1 },
                          { duration: 3*duration/2,
-                           queue: 'false'
+                           queue: false
                          });
   }
 
@@ -49,15 +49,10 @@ port.on("message", async function (oscMessage) {
     $(selector).velocity({fill: val1 },
                          { duration: duration,
                            easing: 'easeOutCirc',
-                           queue: 'false'
+                           queue: false
                          });
   }
 });
-
-
-// BD should step through the first haus, keys through the second
-// sub bass should swell the size of the large haus, thorny_melody should swell the second
-//
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
