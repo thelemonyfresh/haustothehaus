@@ -1,5 +1,5 @@
 # haustothehaus
-House music with house sounds. Live coding with [Sonic Pi](https://sonic-pi.net/).
+House music with house sounds. Live coded with [Sonic Pi](https://sonic-pi.net/).
 
 ## performance videos
 * [garage (labour day demo)](https://youtu.be/KhOGhzWaOqc)
