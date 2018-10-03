@@ -69,67 +69,7 @@ end
 
 define :sub_bass_at do |n|
   #this should be 64 beats long
-  in_thread do
-    #use_synth :beep
-    use_synth :fm
-    hd = 16
-    chrds = [31, 35, 28, 27].map{ |n| n + 12 }.ring
 
-    s = play chrds[(n > 0.2 ? 0 : 2)], amp: 0.5, amp_slide: 4, note_slide: 0.07,
-      attack: 0.01, decay: 2, sustain: 8, release: 6,
-      cutoff: 120, cutoff_slide: 0.75,
-      depth: 0.75
-
-    chrds.tick # this is a hack =(
-
-    control s, amp: 0.75
-
-    note_length = n > 0.7 ? 4 : 0.4
-    color '.big-haus', 0.45, 'sonic_green' if  n > 0.2
-    color '.big-haus', 4, 'sonic_pink' if n <= 0.2
-    sleep 0.5
-    2.times do
-      unless (n > 0.7 || n <= 0.2)
-        color '.big-haus', 0.7, 'haus_yellow'
-        control s, cutoff: 10
-      end
-      sleep 0.75
-
-      unless (n > 0.7 || n <= 0.2)
-        color '.big-haus', 0.5, 'sonic_green'
-        control s, cutoff: 110
-      end
-      sleep 0.75
-    end
-    control s, cutoff: 100
-    sleep 1.5
-    sleep 0.93
-
-    control s, cutoff: 120
-
-    if n < 0.4
-      control s, amp: 0
-      color '.big-haus', 4, 'haus_yellow'
-    end
-
-    puts n
-
-    if n > 0.7
-      control s, note: chrds.tick
-      puts 'abt to be blue'
-      color '.big-haus', 0.25, 'sonic_blue'
-    end
-
-    sleep 2
-    if n > 0.4
-      control s, note: chrds.tick
-      color '.big-haus', 0.5, 'sonic_pink'
-    end
-
-    sleep 2
-
-    color '.big-haus', 6, 'haus_yellow'
-  end
 end
 
 define :sub_bass do
@@ -196,3 +136,65 @@ end
 
 # haus_keys_drop
 #   three quick ones at the end
+
+define :bassment do
+  bassment_at(0)
+end
+
+
+define :bassment_at do |amt|
+  nts = scale(:E2, :minor_pentatonic)
+
+  in_thread do
+    if amt < 0.05
+      sub_bass_synth(nts[0], 16)
+      sleep 16
+
+    elsif amt < 0.255
+      with_fx :slicer, phase: 1, pulse_width: 0.5, wave: 3, smooth: 0.0125 do
+        sub_bass_synth(nts[0], 16)
+      end
+
+      16.times do |n|
+        sleep 0.5
+        sub_bass_synth(nts[0], 0.5)
+        sleep 0.5
+      end
+    elsif amt < 0.35
+      16.times do |n|
+        patt = knit(0,15, 2,1)
+        bass_note = nts[patt.tick(:bassment_notes)]
+
+        sleep 0.5
+        sub_bass_synth(bass_note, 0.5)
+        sleep 0.5
+      end
+    elsif amt < 0.55
+      16.times do
+        note_num = knit(0,7, 2,1, 0,6, 4,1, 1,1).tick(:bassment_notes)
+        puts nts[note_num]
+        sleep 0.5
+        sub_bass_synth(nts[note_num], 0.5)
+        sleep 0.5
+      end
+    elsif amt < 0.755
+      16.times do
+        note_num = knit(0,3, 2,1, 0,3, 4,1, 0,3, 2,1, 0,1, 5,1, 3,1, 2,1, 1,1).tick(:bassment_notes)
+        puts nts[note_num]
+        sleep 0.5
+        sub_bass_synth(nts[note_num], 0.5)
+        sleep 0.5
+      end
+
+    elsif amt < 0.95
+      16.times do |n|
+        div = [1,2,4,8,16][((amt - 0.8)*50).to_i]
+        puts div
+        sleep 0.5
+        sub_bass_synth(nts[0], 0.5) if n%div == 0
+        sleep 0.5
+      end
+
+    end
+  end
+end

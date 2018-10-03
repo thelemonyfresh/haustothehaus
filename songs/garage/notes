@@ -1,13 +1,9 @@
-# garage_door -> car -> entourage -> keys -> gravel_bd -> all out to just keys/car/sub fades in
 
+###### NOTES ######
 use_bpm 130
 
+# garage_door -> car -> entourage -> keys -> gravel_bd -> all out to just keys/car/sub fades in
 
-###### NOTES ######
-###### NOTES ######
-###### NOTES ######
-###### NOTES ######
-###### NOTES ######
 # take out the bass drum to introduce the bassline, breakdown into melodies
 # transitions should be one element at a time, major things take up to 16 bars
 # unfold the melody a few notes at a time_warp
@@ -23,3 +19,15 @@ use_bpm 130
   #     entourage
   #   end
   # end
+
+
+
+# 43, 47, 40, 39 sub bass
+# :G, B, :E, D#
+# 28, 15, 35, 19 thorny
+# :E, :D#, B, G
+
+
+#puts note :B2
+
+#puts scale :E2, :minor_pentatonic
