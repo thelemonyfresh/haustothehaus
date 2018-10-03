@@ -1,0 +1,24 @@
+
+uncomment do
+  live_loop :come do
+    switcher
+    
+    sleep 8
+  end
+  
+  live_loop :on, sync: :come do
+    leaky_door
+    # tile bass needs work -- develop entry
+    # tile_bass
+    
+    sleep 16
+  end
+  
+  live_loop :inside, sync: :come do
+    
+    #mat_bd
+    sleep 0.5
+    #lights_at(get(:knob_18_state))
+    sleep 0.5
+  end
+end
