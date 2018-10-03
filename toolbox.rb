@@ -1,5 +1,17 @@
 #### TOOLBOX ####
 
+# FILE LOADERS
+
+haus_samps = "/Users/daniel/recording/samples/haus/"
+
+run_file "/Users/daniel/recording/haustothehaus/songs/garage/instruments.rb"
+run_file "/Users/daniel/recording/haustothehaus/songs/garage/sounds.rb"
+run_file "/Users/daniel/recording/haustothehaus/songs/garage/patterns.rb"
+
+run_file "/Users/daniel/recording/haustothehaus/songs/foyer/instruments.rb"
+run_file "/Users/daniel/recording/haustothehaus/songs/foyer/sounds.rb"
+run_file "/Users/daniel/recording/haustothehaus/songs/foyer/patterns.rb"
+
 # VISUALIZATION HELPERS
 
 define :viz do |type, selector, beats, val1|
