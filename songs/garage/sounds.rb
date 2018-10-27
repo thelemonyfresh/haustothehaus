@@ -1,4 +1,4 @@
-haus_samps = "/Users/daniel/recording/samples/haus/"
+haus_samps = "/Users/daniel/recording/haus_samples"
 
 define :gravel_bd do
   use_synth :beep

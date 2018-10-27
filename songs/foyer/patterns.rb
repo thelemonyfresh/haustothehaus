@@ -1,3 +1,5 @@
+haus_samps = "/Users/daniel/recording/samples/haus/"
+
 define :switcher do
   switcher_at(0)
 end
@@ -23,13 +25,16 @@ define :tile_bass do
 end
 
 define :tile_bass_at do |n|
+  chrd = chord(:D2, :minor7)
   in_thread do
-    tile(:D2, 12)
-    sleep 16
-    ch = chord(:D2, :major7).reverse.tick(:tile_bass_notes)
-    4.times do
-      tile(ch, 2) if one_in(8-(n*7))
-      sleep 2
-    end
+    tile(chrd[0], 4)
+
+    sleep 4
+    tile(chrd[1], 3) if n > 0.24
+    sleep 4
+    tile(chrd[3], 4) if n > 0.49
+    sleep 6
+
+    sleep 2
   end
 end

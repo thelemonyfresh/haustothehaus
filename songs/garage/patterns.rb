@@ -66,16 +66,6 @@ define :entourage_times do |num_bars|
   end
 end
 
-
-define :sub_bass_at do |n|
-  #this should be 64 beats long
-
-end
-
-define :sub_bass do
-  sub_bass_at(0)
-end
-
 define :ground_up do
   knit(0.1,1,0.25,2,0.9,1)
 end

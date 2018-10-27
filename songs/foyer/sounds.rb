@@ -1,3 +1,5 @@
+haus_samps = "/Users/daniel/recording/haus_samples/"
+
 define :lightswitch do |length|
   sample haus_samps, "lightswitch", start: 0.202-(0.02*length), finish: 0.2+(0.3*length), rate: 1.05, decay: 0.25
 end
@@ -13,18 +15,23 @@ define :mat_bd do
   sample :bd_haus, amp: 0.6
   use_synth :beep
   use_synth :beep
-  play sc[0], amp: 0.7,
+  play sc[0], amp: 0.3,
        attack: 0.1, attack_level: 1.2,
        decay: 0.3,
        sustain: 0.07,
-       release: 0.2
+       release: 0.3
 
   use_synth :fm
   play sc[2], amp: 0.5,
-       attack: 0.2, attack_level: 0.75,
+       attack: 0.25, attack_level: 0.75,
        decay: 0.1,
        sustain: 0,
        release: 0.1
+  in_thread do
+    color '.big-haus', 0.25, 'sonic_blue'
+    sleep 0.75
+    color '.big-haus', 0.75, 'haus_yellow'
+  end
 end
 
 define :bells do
