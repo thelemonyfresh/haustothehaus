@@ -13,13 +13,22 @@ end
 define :mat_bd do
   sc = scale(:D1, :major_pentatonic)
   sample :bd_haus, amp: 0.6
-  use_synth :beep
+
   use_synth :beep
   play sc[0], amp: 0.3,
        attack: 0.1, attack_level: 1.2,
        decay: 0.3,
        sustain: 0.07,
        release: 0.3
+
+  with_fx :lpf, cutoff: 50 do
+    use_synth :square
+    play sc[0], amp: 0.2,
+         attack: 0.1, attack_level: 1.2,
+         decay: 0.3,
+         sustain: 0.07,
+         release: 0.3
+  end
 
   use_synth :fm
   play sc[2], amp: 0.5,
