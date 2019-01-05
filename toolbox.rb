@@ -2,20 +2,20 @@
 
 # FILE LOADERS
 
-haus_samps = "/Users/daniel/recording/samples/haus/"
+haus_samps = '/Users/daniel/recording/samples/haus/'
 
-run_file "/Users/daniel/recording/haustothehaus/songs/garage/instruments.rb"
-run_file "/Users/daniel/recording/haustothehaus/songs/garage/sounds.rb"
-run_file "/Users/daniel/recording/haustothehaus/songs/garage/patterns.rb"
+run_file '/Users/daniel/recording/haustothehaus/songs/garage/instruments.rb'
+run_file '/Users/daniel/recording/haustothehaus/songs/garage/sounds.rb'
+run_file '/Users/daniel/recording/haustothehaus/songs/garage/patterns.rb'
 
-run_file "/Users/daniel/recording/haustothehaus/songs/foyer/instruments.rb"
-run_file "/Users/daniel/recording/haustothehaus/songs/foyer/sounds.rb"
-run_file "/Users/daniel/recording/haustothehaus/songs/foyer/patterns.rb"
+run_file '/Users/daniel/recording/haustothehaus/songs/foyer/instruments.rb'
+run_file '/Users/daniel/recording/haustothehaus/songs/foyer/sounds.rb'
+run_file '/Users/daniel/recording/haustothehaus/songs/foyer/patterns.rb'
 
 # VISUALIZATION HELPERS
 
 define :viz do |type, selector, beats, val1|
-  dur = 1000 * beats * 60/current_bpm
+  dur = 1000 * beats * 60 / current_bpm
   osc "/#{dur}/#{selector}/#{type}/#{val1}"
 end
 
@@ -40,6 +40,26 @@ define :color do |selector, beats, color|
   viz 'color', selector, beats, color
 end
 
+define :text do |text|
+  viz 'text', '.above', 0, text
+end
+
 define :tick_key do
-  %w(h a u s).pick(16).join
+  %w[h a u s].pick(16).join
+end
+
+#
+# Ramp patterns.
+#
+
+define :ground_up do
+  knit(0.1, 1, 0.25, 2, 0.9, 1)
+end
+
+define :ground_down do
+  knit(0.1, 1, 0.5, 1, 0.9, 1)
+end
+
+define :sunrise do
+  range(0, 1, 0.25)
 end

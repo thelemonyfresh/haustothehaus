@@ -1,13 +1,18 @@
+#
+# Sound patterns.
+#
 define :entourage do
-  amp = range(0.125,1,0.125).ramp.tick(:entourage_amp)
+  entourage_at(0)
+end
+
+define :entourage_at do |amt|
+  amp = range(0.125, 1, 0.125).ramp.tick(:entourage_amp)
   puts "amp: #{amp}"
 
   in_thread do
     with_fx :level, amp: amp do
       with_fx :compressor do
-        gs1 = garage_door_opts({start: 0.4, finish: 0.44,
-                                attack: 0.01, release: 0.5,
-                                pan: -0.9, pan_slide: 1})
+        gs1 = garage_door_opts(start: 0.4, finish: 0.44,
                                attack: 0.01, release: 0.5,
                                pan: -0.9, pan_slide: 1)
         control gs1, pan: 0.2

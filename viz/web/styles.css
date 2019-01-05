@@ -5,3 +5,8 @@ svg { position:fixed; top:0; left:0; height:100%; width:100% }
   fill: #f9de2a;
   position: relative;
 }
+
+.text-yellow {
+  color: #f9de2a;
+  font-family: 'monospace'
+}

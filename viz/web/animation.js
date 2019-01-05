@@ -6,6 +6,7 @@ port.open();
 
 // catch and process osc messages
 port.on("message", async function (oscMessage) {
+  console.log("asdf");
   var [,duration,selector,actionType,val1] = oscMessage.address.split('/');
   console.log("ActionType: " + actionType);
   console.log("Duration: " + duration);
@@ -51,6 +52,10 @@ port.on("message", async function (oscMessage) {
                            easing: 'easeOutCirc',
                            queue: false
                          });
+  }
+
+  if (actionType == 'text') {
+    $(selector).prepend(val1 + " ");
   }
 });
 
