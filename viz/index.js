@@ -1,10 +1,14 @@
 var osc = require("osc"),
     WebSocket = require("ws");
 
+//
+// Set up OSC UDP connection
+//
 var getIPAddresses = function () {
     var os = require("os"),
     interfaces = os.networkInterfaces(),
     ipAddresses = [];
+
 
     for (var deviceName in interfaces){
         var addresses = interfaces[deviceName];
@@ -36,6 +40,9 @@ udp.on("ready", function () {
 
 udp.open();
 
+//
+// Set up WebSocket connection
+//
 var wss = new WebSocket.Server({
     port: 8081
 });
