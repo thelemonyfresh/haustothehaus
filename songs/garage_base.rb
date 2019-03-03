@@ -119,3 +119,225 @@ end
 # better use of repeating initialism of sample, end part of sample later
 # off-beat melody part is more what I'm going for...
 
+
+
+############ 2019 ##################
+
+# Standard Incantation
+base_dir = '/Users/daniel/src/talldan_sonicpi/'
+load_snippets("#{base_dir}snippets/")
+run_file "#{base_dir}xtouch_knobs.rb"
+run_file "#{base_dir}samples.rb"
+
+
+use_osc '10.232.254.197', 7400
+
+# haustothehaus
+
+haus_dir = '/Users/daniel/src/haustothehaus/'
+haus_samps = '/Users/daniel/recording/haus_samples'
+run_file "#{haus_dir}toolbox.rb"
+
+#
+# haustothehaus
+#
+
+use_bpm 130
+
+### Garage
+
+### INTRO ###
+
+##| car
+##| sleep 8
+##| garage_door
+##| sleep 8
+
+##| entourage
+##| sleep 8
+##| entourage
+##| car_door_close
+##| sleep 8
+##| 4.times do
+##|   entourage
+##|   car_door_close
+##|   keys
+##|   sleep 8
+##| end
+
+### END INTRO ###
+
+### INTRO pt 2 ###
+
+##| live_loop :out do
+##|   with_fx :level, amp: get(:knob_1_state) do
+##|     with_fx :slicer, phase: 1, probability: 1 do
+##|       entourage
+##|     end
+##|   end
+
+##|   with_fx :level, amp: get(:knob_2_state) do
+
+##|     car_door_close
+##|   end
+
+##|   sleep 8
+##| end
+
+##| live_loop :gravel, sync: :out do
+##|   gravel_bd
+##|   sleep 0.5
+##|   haus_keys
+##|   sleep 0.5
+##| end
+
+##| live_loop :bass, sync: :out do
+##|   with_fx :flanger do
+
+##|     with_fx :pan, pan: -0.3 do
+##|       with_fx :band_eq, freq: 63, db: -5 do
+##|         with_fx :hpf, cutoff: note(:E2) do
+##|           bassment_at(0.3)
+##|         end
+
+##|       end
+##|     end
+
+##|   end
+##|   with_fx :pan, pan: 0.25 do
+##|     with_fx :flanger, depth: 10 do
+##|       jay_bassline
+##|     end
+##|   end
+
+
+##|   sleep 16
+
+##| end
+
+### END INTRO pt 2 ###
+
+
+### MAIN GROOVE ###
+
+
+##| live_loop :groove_out, sync: :garage_groove do
+##|   stop unless get(:garage_groove_playing)
+  
+##|   with_fx :level, amp: get(:knob_1_state) do
+##|     with_fx :slicer, phase: 0.5, probability: 0.25 do
+##|       entourage
+##|     end
+##|   end
+  
+##|   with_fx :level, amp: get(:knob_2_state) do
+    
+##|     car_door_close
+##|   end
+  
+##|   sleep 8
+##| end
+
+##| live_loop :groove_gravel, sync: :groove_out do
+##|   stop unless get(:garage_groove_playing)
+  
+##|   gravel_bd
+##|   sleep 0.5
+##|   #haus_keys if one_in 4
+##|   sleep 0.5
+##| end
+
+##| live_loop :groove_bass, sync: :groove_out do
+##|   stop unless get(:garage_groove_playing)
+  
+##|   with_fx :flanger do
+    
+##|     with_fx :pan, pan: -0.3 do
+##|       with_fx :band_eq, freq: 63, db: -5 do
+##|         with_fx :hpf, cutoff: note(:E2) do
+##|           bassment_at(0.9)
+##|         end
+        
+##|       end
+##|     end
+    
+##|   end
+##|   with_fx :pan, pan: 0.25 do
+##|     with_fx :flanger, depth: 10 do
+##|       #jay_bassline
+##|     end
+##|   end
+  
+##|   #thorny
+  
+  
+##|   sleep 16
+  
+##| end
+
+
+### END MAIN GROOVE ###
+
+
+##| live_loop :out do
+##|   with_fx :slicer, phase: 0.5, probability: 0.6  do
+##|     entourage
+##|   end
+
+##|   #keys
+##|   car_door_close
+##|   #end
+
+##|   #keys
+
+##|   sleep 8
+##| end
+
+##| live_loop :gravel, sync: :out do
+##|   puts scale(:E1, :minor_pentatonic)
+##|   with_fx :level, amp: 0.7 do
+##|     gravel_bd
+##|   end
+##|   sleep 0.5
+
+##|   haus_keys
+##|   sleep 0.5
+##| end
+
+
+##| live_loop :bass, sync: :out do
+##|   with_fx :hpf, cutoff: 40, amp: 1 do
+##|     jay_bassline
+##|   end
+
+
+##|   #bassment_at(0.3)
+##|   # keep 0.4
+##|   #bassment_at(0.4)
+
+##|   thorny_at(0.3)
+##|   sleep 16
+
+##| end
+
+#sharpen up around frequencies..
+
+
+# garage_door, car_door_close, keys
+# gravel_bd, haus_keys, bassment
+# thorny, bassment, windy_melody
+
+### Foyer
+
+
+
+# mat_bd, switcher, lights, leaky_door
+# tile_bass
+
+# #| live_loop :floor, sync: :gravel do
+# #|   with_fx :level, amp: get(:knob_18_state) do
+# #|     mat_bd
+# #|   end
+# #|   sleep 0.5
+# #|   sleep 0.5
+# #| end

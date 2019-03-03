@@ -2,15 +2,15 @@
 
 # FILE LOADERS
 
-haus_samps = '/Users/daniel/recording/samples/haus/'
+haus_samps = '/Users/daniel/recording/haus_samples'
 
-run_file '/Users/daniel/recording/haustothehaus/songs/garage/instruments.rb'
-run_file '/Users/daniel/recording/haustothehaus/songs/garage/sounds.rb'
-run_file '/Users/daniel/recording/haustothehaus/songs/garage/patterns.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/garage/instruments.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/garage/sounds.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/garage/patterns.rb'
 
-run_file '/Users/daniel/recording/haustothehaus/songs/foyer/instruments.rb'
-run_file '/Users/daniel/recording/haustothehaus/songs/foyer/sounds.rb'
-run_file '/Users/daniel/recording/haustothehaus/songs/foyer/patterns.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/foyer/instruments.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/foyer/sounds.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/foyer/patterns.rb'
 
 # VISUALIZATION HELPERS
 
@@ -40,8 +40,12 @@ define :color do |selector, beats, color|
   viz 'color', selector, beats, color
 end
 
-define :text do |text|
+define :text_above do |text|
   viz 'text', '.above', 0, text
+end
+
+define :text_below do |text|
+  viz 'text', '.below', 0, text
 end
 
 define :tick_key do

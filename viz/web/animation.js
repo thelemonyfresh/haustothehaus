@@ -4,6 +4,9 @@ var port = new osc.WebSocketPort({
 });
 port.open();
 
+console.log("port is open");
+console.log(port);
+
 // catch and process osc messages
 port.on("message", async function (oscMessage) {
   console.log("asdf");
