@@ -7,8 +7,8 @@ define :entourage do
 end
 
 define :entourage_at do |amt|
-  text_above 'garage door'
-  
+  falling_text 'garage door'
+
   in_thread do
     with_fx :level, amp: 0.7 do
       with_fx :compressor do
@@ -69,8 +69,8 @@ define :thorny_at do |base_amt|
   end
 
   in_thread do
-    text_above'thorny'
-    
+    falling_text'thorny'
+
     colors = %w[sonic_green sonic_blue sonic_pink].ring
 
     color '.little-haus.h', 0.25, colors[(base_amt * 2.9).to_i] if base_amt > 0.1
@@ -101,14 +101,14 @@ end
 define :bassment_at do |amt|
   nts = scale(:E2, :minor_pentatonic)
 
-  text_above'bassment'
+  falling_text'bassment'
 
   in_thread do
     if amt < 0.05
       with_fx :level, amp: 0.6 do
         sub_bass_synth(nts[0], 16)
       end
-      
+
       sleep 16
 
     elsif amt < 0.3
@@ -134,7 +134,7 @@ define :bassment_at do |amt|
       end
     elsif amt < 0.55
       16.times do
-        note_num = knit(0, 7, 2, 1, 0, 6, 4, 1, 1, 1).tick(:bassment_notes)
+        note_num = knit(0, 7, 2, 1, 0, 6, 4, 1, 2, 1).tick(:bassment_notes)
         puts nts[note_num]
         sleep 0.5
         sub_bass_synth(nts[note_num], 0.4)
@@ -167,7 +167,7 @@ define :windy_melody do
 end
 
 define :windy_melody_at do |amt|
-  text_above'windy'
+  falling_text'windy'
   in_thread do
     nts = scale(:E2, :minor_pentatonic)
 
@@ -194,28 +194,48 @@ define :rainy do
 end
 
 define :rainy_at do |amt|
-  text_above 'rainy'
-  
+  falling_text 'rainy'
+
   # 8 beats
   in_thread do
     knit(0,2,81,2,41,4,101,8).each do |n|
       with_fx :compressor do
         rain_opts({onset: n, attack: 0.1})
       end
-      
+
       sleep 0.5
     end
   end
 end
 
 define :jay_bassline do
-  text_above'jay'
+  falling_text 'jay'
   in_thread do
-    with_fx :level, amp: 1.5 do
-      with_fx :compressor do
-        sample haus_samps, 'jay_bassline', finish: 0.95
+    with_fx :pan, pan: 0.25 do
+      with_fx :flanger, depth: 10 do
+        with_fx :level, amp: 1.5 do
+          with_fx :compressor do
+            sample haus_samps, 'jay_new_bassline', amp: 0.5#, finish: 0.95
+          end
+        end
       end
     end
   end
 end
 
+define :bell do
+  in_thread do
+    with_fx :slicer, phase: 0.125, phase_slide: 8, wave: 1, amp_min: 0.5 do |sl|
+      with_fx :compressor, threshold: 0.5, slope_above: 1, slope_below: 0.6 do
+        with_fx :hpf, cutoff: note(:E4) do
+          s = sample haus_samps, 'bells', amp: 1, amp_slide: 8, onset: 1,
+                     attack: 0.125, attack_level: 1.25,
+                     decay: 3, release: 0.5
+          control sl, phase: 1
+          control s, amp: 1.5
+        end
+
+      end
+    end
+  end
+end

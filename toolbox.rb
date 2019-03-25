@@ -7,6 +7,7 @@ haus_samps = '/Users/daniel/recording/haus_samples'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/sounds.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/patterns.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/garage/sections.rb'
 
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/sounds.rb'
@@ -14,21 +15,21 @@ run_file '/Users/daniel/src/haustothehaus/songs/foyer/patterns.rb'
 
 # VISUALIZATION HELPERS
 
-define :viz do |type, selector, beats, val1|
+define :viz do |type, selector, beats, val1, val2|
   dur = 1000 * beats * 60 / current_bpm
-  osc "/#{dur}/#{selector}/#{type}/#{val1}"
+  osc "/#{dur}/#{selector}/#{type}/#{val1}/#{val2}"
 end
 
 define :flash do |selector, beats|
-  viz 'flash', selector, beats, 0
+  viz 'flash', selector, beats, 0, ''
 end
 
 define :pulse do |selector, beats|
-  viz 'pulse', selector, beats, 0
+  viz 'pulse', selector, beats, 0, ''
 end
 
 define :rotate do |selector, beats, degrees|
-  viz 'rotate', selector, beats, degrees
+  viz 'rotate', selector, beats, degrees, ''
 end
 
 define :color do |selector, beats, color|
@@ -37,15 +38,15 @@ define :color do |selector, beats, color|
   color = '#3a62c1' if color == 'sonic_blue'
   color = '#f9de2a' if color == 'haus_yellow'
 
-  viz 'color', selector, beats, color
+  viz 'color', selector, beats, color, ''
 end
 
-define :text_above do |text|
-  viz 'text', '.above', 0, text
+define :text do |text|
+  viz 'text', '.above', 0, text, ''
 end
 
-define :text_below do |text|
-  viz 'text', '.below', 0, text
+define :falling_text do |text|
+  viz 'falling_text', '', 0, text, '#d6117a'
 end
 
 define :tick_key do

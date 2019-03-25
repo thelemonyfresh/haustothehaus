@@ -7,11 +7,10 @@ define :gravel_bd do
   use_synth :beep
 
   with_fx :band_eq, cutoff: note(:E3), db: -10 do
-    sample :bd_haus, amp: 0.25, rate: 0.85
-
+    sample :bd_haus, amp: 0.75, rate: 0.85
   end
 
-  mp = 0.4
+  #mp = 0.4
 
   ##| play :E1, amp: mp,
   ##|   attack: 0.05, attack_level: 1,
@@ -47,7 +46,7 @@ define :garage_door do
 end
 
 define :garage_door_opts do |hsh|
-  with_fx :lpf, cutoff: note(:E6) do#86 do
+  with_fx :lpf, cutoff: note(:E6) do
     with_fx :hpf, cutoff: note(:E3) do
       sample haus_samps, "garage_door", hsh
     end
@@ -60,6 +59,7 @@ define :car do
 end
 
 define :car_door_close do
+  falling_text "car door"
   #takes 8 beats, door close on 5
   in_thread do
     with_fx :reverb, room: 0.8 , mix: 0, mix_slide: 0.25, damp: 0.9 do |fx|
@@ -85,32 +85,34 @@ define :car_door_close do
 
 end
 
-define :big_horn do
-  with_fx :echo, phase: 2, decay: 3, mix: 0.25 do
-    sample haus_samps, "brown_horns_2", attack: 1, beat_stretch: 4
-  end
-end
+# take these out entirely?
+# define :big_horn do
+#   with_fx :echo, phase: 2, decay: 3, mix: 0.25 do
+#     sample haus_samps, "brown_horns_2", attack: 1, beat_stretch: 4
+#   end
+# end
 
-define :horny_bass do |note, len|
-  use_synth :fm
-  pw = 0.25
-  s = play note, attack: 0.1*(1.0/len), attack_level: 1, decay: 0.195*len, sustain: 0.1, sustain_level: 0.75, release: 0.3*len,
-           divisor: 1.501, depth: 2,
-           #pulse_width: pw, pulse_width_slide: 1*len,
-           cutoff: 115, cutoff_slide: 2
-  control s, cutoff: 95
-end
+# define :horny_bass do |note, len|
+#   use_synth :fm
+#   pw = 0.25
+#   s = play note, attack: 0.1*(1.0/len), attack_level: 1, decay: 0.195*len, sustain: 0.1, sustain_level: 0.75, release: 0.3*len,
+#            divisor: 1.501, depth: 2,
+#            #pulse_width: pw, pulse_width_slide: 1*len,
+#            cutoff: 115, cutoff_slide: 2
+#   control s, cutoff: 95
+# end
 
-define :animal_house do
-  with_fx :gverb, damp: 0.98, pre_damp: 1, room: 9 do
-    s = sample haus_samps, "house_stonemason", pan: 0.25, pan_slide: 2,
-               start: 0.0236, finish: 0.9449, attack: 0.2205, decay: 0.5354, beat_stretch: 4, amp: 0.3,
-               cutoff: 100
-    control s, pan: -0.5
-  end
-end
+# define :animal_house do
+#   with_fx :gverb, damp: 0.98, pre_damp: 1, room: 9 do
+#     s = sample haus_samps, "house_stonemason", pan: 0.25, pan_slide: 2,
+#                start: 0.0236, finish: 0.9449, attack: 0.2205, decay: 0.5354, beat_stretch: 4, amp: 0.3,
+#                cutoff: 100
+#     control s, pan: -0.5
+#   end
+# end
 
 define :keys do
+  falling_text "keys"
   with_fx :reverb, room: 0.1, mix: 0.4, damp: 0.6  do
     sample haus_samps, "neu_haus_keys", start: 0.087, finish: 0.44, release: 1#, beat_stretch: 4, cutoff: 120
   end
