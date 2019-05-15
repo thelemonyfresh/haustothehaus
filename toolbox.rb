@@ -8,6 +8,7 @@ run_file '/Users/daniel/src/haustothehaus/songs/garage/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/sounds.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/patterns.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/sections.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/garage/nm.rb'
 
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/sounds.rb'
@@ -16,7 +17,7 @@ run_file '/Users/daniel/src/haustothehaus/songs/foyer/patterns.rb'
 # VISUALIZATION HELPERS
 
 define :viz do |type, selector, beats, val1, val2|
-  dur = 1000 * beats * 60 / current_bpm
+  dur = 1000 * beats * 60.0 / current_bpm
   osc "/#{dur}/#{selector}/#{type}/#{val1}/#{val2}"
 end
 
@@ -38,7 +39,6 @@ define :color do |selector, beats, color|
   color = '#3a62c1' if color == 'sonic_blue'
   color = '#f9de2a' if color == 'haus_yellow'
 
-  viz 'color', selector, beats, color, ''
 end
 
 define :text do |text|
@@ -46,11 +46,30 @@ define :text do |text|
 end
 
 define :falling_text do |text|
-  viz 'falling_text', '', 0, text, '#d6117a'
+  viz 'falling_text', '', 8, text, '#d6117a'
 end
 
 define :tick_key do
   %w[h a u s].pick(16).join
+end
+
+#
+# Helper methods
+#
+
+# give ring and amount between 0 and 1, it chooses
+
+define :ring_amt do |rng, amt|
+  length = rng.length
+
+  rng[(length * amt).to_i]
+
+end
+
+define :get_bank_val_or_default do |key,default|
+  bank = get(key)
+  return default if bank.nil?
+  get(bank)
 end
 
 #

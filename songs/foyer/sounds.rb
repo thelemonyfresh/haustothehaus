@@ -42,7 +42,3 @@ define :mat_bd do
     color '.big-haus', 0.75, 'haus_yellow'
   end
 end
-
-define :bells do
-  sample haus_samps, 'bells.aif', beat_stretch: 32
-end

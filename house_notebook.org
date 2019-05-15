@@ -491,3 +491,21 @@
 
 
 #+END_SRC
+* <2019-05-01 Wed> old stuff in the garage
+#+BEGIN_SRC ruby
+  # define :big_horn do
+  #   with_fx :echo, phase: 2, decay: 3, mix: 0.25 do
+  #     sample haus_samps, "brown_horns_2", attack: 1, beat_stretch: 4
+  #   end
+  # end
+
+  # define :horny_bass do |note, len|
+  #   use_synth :fm
+  #   pw = 0.25
+  #   s = play note, attack: 0.1*(1.0/len), attack_level: 1, decay: 0.195*len, sustain: 0.1, sustain_level: 0.75, release: 0.3*len,
+  #            divisor: 1.501, depth: 2,
+  #            #pulse_width: pw, pulse_width_slide: 1*len,
+  #            cutoff: 115, cutoff_slide: 2
+  #   control s, cutoff: 95
+  # end
+#+END_SRC

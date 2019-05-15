@@ -1,4 +1,26 @@
 
+###### LIST
+intro
+- garage_door
+- car
+
+main sounds
+- car_door_close 
+- keys
+
+- gravel_bd
+- haus_keys
+
+* rain (rain_opts)
+
+patterns
+* windchimes (windchime_num)
+* entourage (entourage_at)
+* roses (roses_at)
+
+
+* = nm control
+
 ###### NOTES ######
 use_bpm 130
 
