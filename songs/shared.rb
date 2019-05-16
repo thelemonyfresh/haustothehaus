@@ -70,14 +70,14 @@ define :deep_house_bass do |note, duration|
     with_fx :reverb do
 
       use_tuning :equal
-      play note, adsr, amp: 0.2
+      play note, adsr, amp: 0.25
       play note - 12, adsr, amp: 0.1
       play note + 19, adsr, amp: 0.15
 
       sleep 0.1
 
       use_tuning :pythagorean
-      play note, adsr, amp: 0.1
+      play note, adsr, amp: 0.25
       play note - 12, adsr, amp: 0.2
       play note + 19, adsr, amp: 0.15
 
@@ -87,6 +87,7 @@ define :deep_house_bass do |note, duration|
 end
 
 define :thorny_synth do |nt, duration|
+  use_synth :tb303
   s= nil
 
   with_fx :bpf, res: 0.5, centre: :D4, mix: 0.7 do

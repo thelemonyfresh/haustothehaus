@@ -58,13 +58,14 @@ define :roses do
 end
 
 define :roses_at do |amt|
-  use_synth :tb303
-
+  amt = 0.75 + amt * 0.25
   in_thread do
     with_fx :reverb, room: 0.7165354 do
       chord(:D4,:major7, invert: 1).reverse.each do |nt|
-        co = ring(80*amt,120*amt**2,120*amt**3,100*amt)
+        co = ring(80*amt,110*amt**2,100*amt**3,100*amt)
+        puts co.look
         with_fx :lpf, cutoff: co.tick do
+
           thorny_synth(nt,0.25)
         end
         sleep 0.25
