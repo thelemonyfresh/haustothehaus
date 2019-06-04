@@ -7,8 +7,6 @@ haus_samps = '/Users/daniel/recording/haus_samples'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/sounds.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/patterns.rb'
-run_file '/Users/daniel/src/haustothehaus/songs/garage/sections.rb'
-run_file '/Users/daniel/src/haustothehaus/songs/garage/nm.rb'
 
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/sounds.rb'
@@ -61,15 +59,38 @@ end
 
 define :ring_amt do |rng, amt|
   length = rng.length
-
   rng[(length * amt).to_i]
-
 end
+
+# use like set(:garage, :A)
 
 define :get_bank_val_or_default do |key,default|
   bank = get(key)
+  puts "here"
+  puts bank
+  puts get(bank)
   return default if bank.nil?
   get(bank)
+end
+
+# play_synth_melody
+
+#
+# melody: hash like...
+# {
+#   notes: ring(:C,:A,:D...),
+#   times: ring(1,2,1,1,...),
+#   durations: ring(0.5, 0.5, 0.25,...)
+# }
+
+define :play_synth_melody do |synth, melody|
+  in_thread do
+    at melody[:times] do |time|
+      time_index = melody[:times].index(time)
+      send(synth, melody[:notes][time_index], melody[:durations][time_index])
+    end
+    sleep melody[:times].max
+  end
 end
 
 #

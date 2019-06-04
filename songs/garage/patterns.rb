@@ -5,27 +5,23 @@ haus_samps = '/Users/daniel/recording/haus_samples'
 #
 
 # entourage
-define :entourage do
-  entourage_at(get_bank_val_or_default(:garage_bank, 0))
-end
+# 8
 
-define :entourage_at do |amt|
+define :entourage do |amt = get_bank_val_or_default(:garage_bank, 0)|
   falling_text 'garage door'
 
   in_thread do
 
     ph = ring_amt(ring(1,1,0.5,0.25),amt)
-    pr = 1 - amt
+    pr = 1 - amt/2.5
     mx = ring_amt(ring(0,1,1,1,amt),amt)
 
-    puts ph, pr, mx
-    with_fx :slicer, phase: ph, probability: pr  do
+    with_fx :slicer, phase: ph, probability: pr, mix: mx  do
       with_fx :level, amp: 0.7 do
         with_fx :compressor do
           gs1 = garage_door_opts(start: 0.4, finish: 0.44,
                                  attack: 0.01, release: 0.5,
                                  pan: -0.9, pan_slide: 1)
-          puts gs1
           control gs1, pan: 0.2
           at 0.9 do
             gs2 = garage_door_opts(start: 0.423, finish: 0.45,
@@ -52,18 +48,18 @@ define :entourage_at do |amt|
 end
 
 # roses
+# 1
 
-define :roses do
-  roses_at(get_bank_val_or_default(:garage_bank, 0.5))
-end
+define :roses_at do |amt = get_bank_val_or_default(:garage_bank, 0.5)|
+  in_thread do
+    falling_text 'roses'
+  end
 
-define :roses_at do |amt|
-  amt = 0.75 + amt * 0.25
+  amt = 0.65 + amt * 0.35
   in_thread do
     with_fx :reverb, room: 0.7165354 do
       chord(:D4,:major7, invert: 1).reverse.each do |nt|
         co = ring(80*amt,110*amt**2,100*amt**3,100*amt)
-        puts co.look
         with_fx :lpf, cutoff: co.tick do
 
           thorny_synth(nt,0.25)
@@ -72,19 +68,12 @@ define :roses_at do |amt|
       end
     end
   end
-
-  in_thread do
-    falling_text 'roses'
-  end
 end
 
 # bassment
+# 16
 
-define :bassment do
-  bassment_at(0)
-end
-
-define :bassment_at_bak do |amt|
+define :bassment do |amt = get_bank_val_or_default(:garage_bank, 0)|
   nts = scale(:E2, :minor_pentatonic)
 
   falling_text 'bassment'
@@ -98,8 +87,12 @@ define :bassment_at_bak do |amt|
       sleep 16
 
     elsif amt < 0.3
-      with_fx :level, amp: 0.7 do
-        with_fx :slicer, phase: 1, pulse_width: 0.5, wave: 3, smooth: 0.0125 do
+      with_fx :level, amp: 0.5 + amt do
+        with_fx :slicer, phase: 1,
+                pulse_width: 0.5,
+                wave: 3,
+                smooth: 0.0125,
+                mix: amt/0.3 do
           sub_bass_synth(nts[0], 16)
         end
       end
@@ -149,12 +142,9 @@ define :bassment_at_bak do |amt|
 end
 
 # windy melody
+# 32
 
-define :windy_melody do
-  windy_melody_at(0.5)
-end
-
-define :windy_melody_at do |amt|
+define :windy_melody do |amt = get_bank_val_or_default(:garage_bank, 0.5)|
   falling_text'windy'
   in_thread do
     nts = scale(:D, :minor_pentatonic, invert: 2)
@@ -172,18 +162,15 @@ define :windy_melody_at do |amt|
       windy_synth(nts[5], 2)
       sleep 2
       windy_synth(nts[1], 1)
-      sleep 2
+      sleep 3
     end
   end
 end
 
-  # windchimes
+# windchimes
+# 32
 
-define :windchimes do
-  windchimes_at(get_bank_val_or_default(:garage_bank, 0))
-end
-
-define :windchimes_at do |amt|
+define :windchimes_at do |amt = get_bank_val_or_default(:garage_bank, 0)|
   in_thread do
     windchime_num(0)
     sleep 8
@@ -191,7 +178,7 @@ define :windchimes_at do |amt|
     sleep 8
     windchime_num(2) if amt > 0
     sleep 8
-    windchime_num(0) if amt > 0.75
+    windchime_num(0) if amt > 0.6
     sleep 8
   end
 end

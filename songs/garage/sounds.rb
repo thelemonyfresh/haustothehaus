@@ -1,5 +1,12 @@
 haus_samps = "/Users/daniel/recording/haus_samples"
 
+#
+# Sounds.
+#
+
+# gravel
+# 0.5
+
 define :gravel_bd do
   use_synth :beep
 
@@ -10,6 +17,27 @@ define :gravel_bd do
   pulse %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:big), 0.75
 end
 
+# keys
+# 4
+
+define :keys do
+  falling_text "keys"
+  with_fx :reverb, room: 0.1, mix: 0.4, damp: 0.6  do
+    sample haus_samps, "neu_haus_keys", start: 0.087, finish: 0.44, release: 1
+  end
+end
+
+# haus_keys
+# 0.5
+
+define :haus_keys do
+  pat = range(8,16,1) + [31, 32, 33, 41, 42]
+  sample haus_samps, "neu_haus_keys", cutoff: 115, onset: pat.tick(:hk)
+  pulse '.little-haus.s', 0.25
+end
+
+# garage_door
+# 32
 
 define :garage_door do
   garage_door_opts({beat_stretch: 32})
@@ -26,16 +54,20 @@ define :garage_door_opts do |hsh|
   s
 end
 
+# car
+# n/t
 
 define :car do
   sample haus_samps, "car"
 end
 
+# car_door_close
+# 8
+
 define :car_door_close do
   falling_text "car door"
 
-  #takes 8 beats, door close on 5
-
+  # door close on 5
   in_thread do
     with_fx :reverb, room: 0.8 , mix: 0, mix_slide: 0.25, damp: 0.9 do |fx|
       sample haus_samps, "car",
@@ -46,28 +78,13 @@ define :car_door_close do
   end
 end
 
-define :keys do
-  falling_text "keys"
-  with_fx :reverb, room: 0.1, mix: 0.4, damp: 0.6  do
-    sample haus_samps, "neu_haus_keys", start: 0.087, finish: 0.44, release: 1
-  end
-end
+# rain
+# 8
 
-define :haus_keys do
-  pat = range(8,16,1) + [31, 32, 33, 41, 42]
-  sample haus_samps, "neu_haus_keys", cutoff: 115, onset: pat.tick(:hk)
-  pulse '.little-haus.s', 0.25
-end
-
-define :rain do
-
-  rain_at(get_bank_val_or_default(:garage_bank, 0.5))
-end
-
-define :rain_at do |amt|
+define :rain do |amt = get_bank_val_or_default(:garage_bank, 0.5)|
   seed = range(0,0.5,0.05).choose
   s = sample haus_samps, 'rain', amp: amt,
-             start: seed + 0.19, finish: seed + 0.226
+             start: seed + 0.19, finish: seed + 0.22
 end
 
 define :windchime_num do |n|
