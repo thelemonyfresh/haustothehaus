@@ -1,25 +1,34 @@
 
-###### LIST
-intro
-- garage_door
-- car
+live_loop :eight do
+  garage_door if get(:A2)
+  car_door_close
+  rain if get(:A4)
+  roses if get(:A3)
+  
+  sleep 8
+end
 
-main sounds
-- car_door_close 
-- keys
+live_loop :half, sync: :eight do
+  gravel_bd if get(:A1)
+  sleep 0.5
+  haus_keys if get(:A2)
+  sleep 0.5
+end
 
-- gravel_bd
-- haus_keys
+live_loop :sixteen, sync: :eight do
+  bassment_dev if get(:A1)
+  tires_bassline if get(:A4)
 
-* rain (rain_opts)
+  sleep 16
+end
 
-patterns
-* windchimes (windchime_num)
-* entourage (entourage_at)
-* roses (roses_at)
+live_loop :thirty_two, sync: :eight do
+  windchimes if get(:A4)
+  windy_melody if get(:A3)
+  
+  sleep 32
+end
 
-
-* = nm control
 
 ###### NOTES ######
 use_bpm 130
@@ -35,25 +44,3 @@ use_bpm 130
 # let the grooves sink in a bit more, only a gradual change at a time, c.f. want you forever carl cox
 # better use of repeating initialism of sample, end part of sample later
 # off-beat melody part is more what I'm going for...
-
-  # with_fx :slicer, phase: 0.5, probability: 0.5 do
-  #   with_fx :ixi_techno do
-  #     entourage
-  #   end
-  # end
-
-
-
-# 43, 47, 40, 39 sub bass
-# :G, B, :E, D#
-# 28, 15, 35, 19 thorny
-# :E, :D#, B, G
-
-
-#puts note :B2
-
-#puts scale :E2, :minor_pentatonic
-
-
-###### WINDY TESTS ##########
-f
