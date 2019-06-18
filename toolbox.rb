@@ -43,8 +43,8 @@ define :text do |text|
   viz 'text', '.above', 0, text, ''
 end
 
-define :falling_text do |text|
-  viz 'falling_text', '', 8, text, '#d6117a'
+define :falling_text do |text, duration|
+  viz 'falling_text', '', duration, text, '#d6117a'
 end
 
 define :tick_key do
@@ -66,9 +66,6 @@ end
 
 define :get_bank_val_or_default do |key,default|
   bank = get(key)
-  puts "here"
-  puts bank
-  puts get(bank)
   return default if bank.nil?
   get(bank)
 end

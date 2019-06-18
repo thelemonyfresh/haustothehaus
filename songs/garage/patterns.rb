@@ -7,8 +7,8 @@ haus_samps = '/Users/daniel/recording/haus_samples'
 # entourage
 # 8
 
-define :entourage do |amt = get_bank_val_or_default(:garage_bank, 0)|
-  falling_text 'garage door'
+define :garage_door do |amt = get_bank_val_or_default(:garage_bank, 0)|
+  falling_text 'garage door', 8
 
   in_thread do
 
@@ -43,16 +43,15 @@ define :entourage do |amt = get_bank_val_or_default(:garage_bank, 0)|
         end
       end
     end
-
   end
 end
 
 # roses
 # 1
 
-define :roses_at do |amt = get_bank_val_or_default(:garage_bank, 0.5)|
+define :roses do |amt = get_bank_val_or_default(:garage_bank, 0.5)|
   in_thread do
-    falling_text 'roses'
+    falling_text 'roses', 1
   end
 
   amt = 0.65 + amt * 0.35
@@ -74,34 +73,22 @@ end
 # 16
 
 define :bassment do |amt = get_bank_val_or_default(:garage_bank, 0)|
-  nts = scale(:E2, :minor_pentatonic)
+  nts = scale(:D2, :minor_pentatonic)
 
-  falling_text 'bassment'
+  falling_text 'bassment', 16
 
   in_thread do
-    if amt < 0.05
-      with_fx :level, amp: 0.6 do
-        sub_bass_synth(nts[0], 16)
-      end
-
-      sleep 16
-
-    elsif amt < 0.3
-      with_fx :level, amp: 0.5 + amt do
+    if amt < 0.15
+      with_fx :level, amp: 0.5 do
         with_fx :slicer, phase: 1,
                 pulse_width: 0.5,
                 wave: 3,
                 smooth: 0.0125,
-                mix: amt/0.3 do
+                mix: amt/0.15 do
           sub_bass_synth(nts[0], 16)
         end
       end
 
-      16.times do |n|
-        sleep 0.5
-        sub_bass_synth(nts[0], 0.4)
-        sleep 0.5
-      end
     elsif amt < 0.35
       16.times do |n|
         patt = knit(0, 15, 2, 1)
@@ -130,7 +117,7 @@ define :bassment do |amt = get_bank_val_or_default(:garage_bank, 0)|
 
     elsif amt < 0.95
       16.times do |n|
-        div = [1, 2, 4, 8, 16][((amt - 0.8) * 50).to_i]
+        div = ring_amt(ring(1, 2, 4, 8, 16), (amt - 0.8)/0.15)
         puts div
         sleep 0.5
         sub_bass_synth(nts[0], 0.4) if n % div == 0
@@ -145,7 +132,7 @@ end
 # 32
 
 define :windy_melody do |amt = get_bank_val_or_default(:garage_bank, 0.5)|
-  falling_text'windy'
+  falling_text 'windy', 12
   in_thread do
     nts = scale(:D, :minor_pentatonic, invert: 2)
 
@@ -170,15 +157,15 @@ end
 # windchimes
 # 32
 
-define :windchimes_at do |amt = get_bank_val_or_default(:garage_bank, 0)|
+define :windchimes do |amt = get_bank_val_or_default(:garage_bank, 0)|
   in_thread do
-    windchime_num(0)
+    windchime_num(0) if amt < 0.4
     sleep 8
     windchime_num(1) if amt > 0.24
     sleep 8
-    windchime_num(2) if amt > 0
+    windchime_num(2) if amt > 0.5
     sleep 8
-    windchime_num(0) if amt > 0.6
+    windchime_num(0) if amt > 0.65
     sleep 8
   end
 end

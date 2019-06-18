@@ -70,20 +70,19 @@ define :deep_haus_synth do |note, duration|
       release: 0.2 * duration
     }
 
-    with_fx :reverb do
+      with_fx :reverb do
 
-      use_tuning :equal
-      play note, adsr, amp: 0.25
-      play note - 12, adsr, amp: 0.1
-      play note + 19, adsr, amp: 0.15
+        use_tuning :equal
+        play note, adsr, amp: 0.25
 
-      sleep 0.1
+        play note - 12, adsr, amp: 0.1
+        play note + 19, adsr, amp: 0.15
 
-      use_tuning :pythagorean
-      play note, adsr, amp: 0.25
-      play note - 12, adsr, amp: 0.2
-      play note + 19, adsr, amp: 0.15
+        sleep 0.1
 
+        use_tuning :pythagorean
+        play note - 12, adsr, amp: 0.2
+        play note + 19, adsr, amp: 0.15
 
     end
   end

@@ -69,13 +69,13 @@ $('document').ready( function(){
   });
 
   function fallingText(text, duration) {
-    var elem = document.createElement("div");
+    var elem = document.createElement("h1");
     elem.textContent = text;
-    elem.style.position = 'relative';
+    elem.style.position = 'fixed';
     elem.style.color = '#f9de2a';
 
-    start_x = window.innerWidth * Math.random() + "px";
-    start_y = window.innerHeight * Math.random() + "px";
+    start_x = Math.floor(window.innerWidth * Math.random()) + 'px';
+    start_y = Math.floor(window.innerHeight * Math.random()) + 'px';
 
     console.log(start_x);
     console.log(start_y);
@@ -85,16 +85,20 @@ $('document').ready( function(){
 
     document.body.appendChild(elem);
 
-    //sleep(duration);
-
-    console.log("duration");
-    console.log(Math.round(duration));
-    //document.body.removeChild(elem);
-    $(elem).animate({
-      top: "-25%",
-    }, Math.round(duration), function() {
-      // Animation complete.
-    });
+    $(elem).velocity(
+      {
+        top: window.innerHeight*Math.random(),
+        left: window.innerWidth*Math.random()
+      },
+      {
+        duration: Math.round(duration),
+        easing: 'linear',
+        complete: function() {
+          // remove when animation complete
+          elem.remove();
+        }
+      }
+    );
   }
 
   function sleep(ms) {
