@@ -5,21 +5,20 @@ var osc = require("osc"),
 // Set up OSC UDP connection
 //
 var getIPAddresses = function () {
-    var os = require("os"),
-    interfaces = os.networkInterfaces(),
-    ipAddresses = [];
+  var os = require("os"),
+      interfaces = os.networkInterfaces(),
+      ipAddresses = [];
 
+  for (var deviceName in interfaces){
+    var addresses = interfaces[deviceName];
 
-    for (var deviceName in interfaces){
-        var addresses = interfaces[deviceName];
+    for (var i = 0; i < addresses.length; i++) {
+      var addressInfo = addresses[i];
 
-        for (var i = 0; i < addresses.length; i++) {
-            var addressInfo = addresses[i];
-
-            if (addressInfo.family === "IPv4" && !addressInfo.internal) {
-                ipAddresses.push(addressInfo.address);
-            }
-        }
+      if (addressInfo.family === "IPv4" && !addressInfo.internal) {
+        ipAddresses.push(addressInfo.address);
+      }
+    }
     }
 
     return ipAddresses;
@@ -34,7 +33,7 @@ udp.on("ready", function () {
     var ipAddresses = getIPAddresses();
     console.log("Listening for OSC over UDP.");
     ipAddresses.forEach(function (address) {
-        console.log(" Host:", address + ", Port:", udp.options.localPort);
+        console.log("Host:", address + ", Port:", udp.options.localPort);
     });
 });
 

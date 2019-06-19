@@ -1,0 +1,511 @@
+* <2019-05-01 Wed> buffer dump
+** garage and foyer from secret
+#+BEGIN_SRC ruby
+  # Standard Incantation
+  base_dir = '/Users/daniel/src/talldan_sonicpi/'
+  load_snippets("#{base_dir}snippets/")
+  run_file "#{base_dir}xtouch_knobs.rb"
+  run_file "#{base_dir}samples.rb"
+
+  # osc
+  use_osc '169.254.168.198', 7400
+
+  # ############## #
+
+  # haustothehaus
+
+  haus_dir = '/Users/daniel/src/haustothehaus/'
+  haus_samps = '/Users/daniel/recording/haus_samples'
+  run_file "#{haus_dir}toolbox.rb"
+
+  #
+  # haustothehaus
+  #
+
+  use_bpm 130
+
+  ### Garage
+
+  # garage_door, car, entourage, car_door_close, keys
+  # gravel_bd, haus_keys, bassment
+  # thorny, bassment, windy_melody
+
+
+  live_loop :out do
+    with_fx :slicer, phase: 0.5, probability: 0.8  do
+      entourage
+    end
+
+    car_door_close
+    # keys
+
+    sleep 8
+  end
+
+  live_loop :gravel, sync: :out do
+    gravel_bd
+    sleep 0.5
+    haus_keys
+    sleep 0.5
+  end
+
+  live_loop :bass, sync: :out do
+    bassment_at(0.5)
+    jay_bassline
+
+    thorny
+
+    sleep 16
+    nm_sync(:A3)
+  end
+
+
+
+  ### Foyer
+
+  # mat_bd, switcher, lights, leaky_door
+  # tile_bass
+
+  # #| live_loop :floor, sync: :gravel do
+  # #|   with_fx :level, amp: get(:knob_18_state) do
+  # #|     mat_bd
+  # #|   end
+  # #|   sleep 0.5
+  # #|   sleep 0.5
+  # #| end
+
+#+END_SRC
+** some foyer experiments
+#+BEGIN_SRC ruby
+
+  use_bpm 130
+
+  live_loop :mats do
+    mat_bd
+    sleep 0.5
+    lightswitch(0.15)
+    sleep 0.5
+  end
+
+  live_loop :tiles, sync: :bell do
+    tile(chord(:D4, :minor7).choose, range(0.5,4,0.5).choose)
+    sleep 4
+  end
+
+  live_loop :bell, sync: :mats do
+    bells
+
+    sleep 32
+
+    with_fx :bitcrusher do
+      bells
+    end
+
+    sleep 32
+  end
+
+#+END_SRC
+** more foyer experiments
+#+BEGIN_SRC ruby
+
+  #
+  # haustothehaus
+  #
+
+
+  define :switch do
+    sample haus_samps, "lightswitch",
+           start: 0.182,
+           finish: 0.5,
+           rate: 1.05,
+           decay: 0.25
+  end
+
+  define :hh do
+    sample :drum_cymbal_closed
+  end
+
+  define :bd do
+    sample :bd_haus
+  end
+
+  define :door do |hsh|
+    sample haus_samps, "door", hsh
+  end
+
+  # PARTS
+
+  live_loop :main do
+    #switcher(1)
+    sleep 8
+  end
+
+
+  define :switcher do |bars|
+    in_thread do
+      bars.times do
+        play :D2, decay: 3, attack: 0.1, attack_level: 1.5, amp: 0.75
+      end
+    end
+  end
+
+#+END_SRC
+** more foyer play
+#+BEGIN_SRC ruby
+  use_bpm 105
+
+
+  haus_samps = "/Users/daniel/recording/haus_samples/"
+
+  # SOUNDS
+  define :switch do
+    sample haus_samps, "lightswitch",
+           start: 0.182,
+           finish: 0.5,
+           rate: 1.05,
+           decay: 0.25
+  end
+
+  live_loop :foy do
+    play :D2, amp: 0.75,
+         attack: 0.1, attack_level: 1.5, decay: 3, sustain: 1, release: 3.9
+    sleep 8
+  end
+
+  live_loop :er, sync: :foy do
+    switch
+    sleep 8
+  end
+
+
+#+END_SRC
+** nice hh with mixed attacks
+#+BEGIN_SRC ruby
+
+  ##| with_fx :slicer, phase: 0.5 do
+  ##|   sample :drum_cymbal_open, amp: 0.5,
+  ##|     attack: range(0.1, 0.75, 0.5).choose,
+  ##|     decay: 0,
+  ##|     sustain: 0,
+  ##|     release: 0.5
+  ##|   sleep 0.5
+  ##| end
+#+END_SRC
+* <2019-05-01 Wed> dj2go setup
+** crossfader
+#+BEGIN_SRC ruby
+  # Welcome to Sonic Pi v3.1
+
+  #dj2go controller setup
+
+  ## a/b fader
+
+  use_bpm 130
+
+  live_loop :fader do
+    use_real_time
+    midi_num, val = sync "/midi/dj2go2/1/16/control_change"
+
+    fader_norm = (val) / 127.0
+
+    volume_left = 1 - fader_norm
+    volume_right = fader_norm
+
+    puts volume_left
+    puts volume_right
+
+    # need to know the thing to control
+
+    set(:left_vol, volume_left)
+    control get(:left_chan), amp: volume_left
+
+    set(:right_vol, volume_right)
+    control get(:right_chan), amp: volume_right
+  end
+
+  set(:left_vol, 0) unless get(:left_vol)
+  set(:right_vol, 0) unless get(:right_vol)
+
+
+
+  live_loop :player_left do
+    use_real_time
+    with_fx :level, amp: get(:left_vol) do |r|
+      set(:left_chan, r)
+      sample :bd_haus
+      sleep 1
+    end
+
+  end
+
+
+
+  live_loop :player_right do
+    use_real_time
+    with_fx :level, amp: get(:right_vol) do |r|
+      set(:right_chan, r)
+
+
+      sample :ambi_choir, beat_stretch: 4
+      sleep 4
+
+
+    end
+  end
+#+END_SRC
+** experiment with rate of change
+#+BEGIN_SRC ruby
+
+  # turn - L/R center dials
+
+  set(:rate, 0)
+  live_loop :turn do
+    note, val = sync "/midi/dj2go2/1/1/control_change"
+    puts get(:rate)
+    set(:rate, get(:rate) + 1)
+    sleep 1
+    set(:rate, get(:rate) - 1)
+  end
+#+END_SRC
+** wirking complete trigger pads
+#+BEGIN_SRC ruby
+
+
+
+  set(:nm_config_defined, true)
+
+  #
+  # Helper Methods
+  #
+
+  define :playing_key do |button|
+    "#{button}_playing".to_sym
+  end
+
+  define :pending_key do |button|
+    "#{button}_pending".to_sym
+  end
+
+  define :restart_cue do |button|
+    "#{button}_restart".to_sym
+  end
+
+  define :note_from_button do |button|
+    button.to_s[1].to_i
+  end
+
+  define :channel_from_button do |button|
+    channel = button.to_s[0]
+    return 5 if channel == 'A'
+    return 6 if channel == 'B'
+  end
+
+  #
+  # Left Bank (A)
+  #
+
+  live_loop :nm_detect_loops_a do
+    use_real_time
+    note, val = sync "/midi/dj2go2/1/5/note_on"
+    button = "A#{note}"
+
+    if get(playing_key(button)) || get(pending_key(button))
+      set playing_key(button), false
+      set pending_key(button), false
+      val = 0
+    else
+      set pending_key(button), true
+      cue restart_cue(button)
+      val = 1
+    end
+
+    midi_note_on note, val, channel: channel_from_button(button)
+  end
+
+  #
+  # Right Bank (B)
+  #
+
+  live_loop :nm_detect_loops_b do
+    use_real_time
+    note, val = sync "/midi/dj2go2/1/6/note_on"
+    button = "B#{note}"
+
+    if get(playing_key(button)) || get(pending_key(button))
+      set playing_key(button), false
+      set pending_key(button), false
+      val = 0
+    else
+      set pending_key(button), true
+      cue restart_cue(button)
+      val = 1
+    end
+
+    midi_note_on note, val, channel: channel_from_button(button)
+  end
+
+  #
+  # sync method for loops
+  #
+
+  define :nm_sync do |button, sync_key|
+    use_real_time
+
+    sync restart_cue(button) unless get(playing_key(button))
+
+    if get(pending_key(button))
+      puts "I'm abt to wait for sync key"
+      sync sync_key
+      puts "now I'm after"
+      set pending_key(button), false
+      set playing_key(button), true
+      midi_note_on note_from_button(button), 127, channel: channel_from_button(button)
+    end
+  end
+
+
+  ####
+  use_real_time
+
+  use_bpm 120
+
+
+
+  live_loop :out do
+
+    sample :drum_cowbell
+    with_fx :slicer, phase: range(0.25,0.5,0.25).choose, phase_slide: 8 do |sl|
+      sample :ambi_choir, amp: 1, beat_stretch: 8
+      #control sl, phase: range(0.25,8,0.25).choose
+    end
+
+    sleep 8
+  end
+
+  live_loop :test do
+    puts "here 1"
+    nm_sync(:A1, :out)
+    puts "here too"
+
+    with_fx :slicer, phase: 0.25, amp_min: 0.1 do
+      sample :ambi_glass_rub
+    end
+
+
+    sleep 4
+  end
+
+
+#+END_SRC
+** haus bassline examples
+#+BEGIN_SRC ruby
+  # Standard Incantation
+  base_dir = '/Users/daniel/src/talldan_sonicpi/'
+  load_snippets("#{base_dir}snippets/")
+  #run_file "#{base_dir}xtouch_knobs.rb"
+  run_file "#{base_dir}samples.rb"
+  run_file "#{base_dir}numark_config.rb"
+
+  # osc
+  use_osc '169.254.168.198', 7400
+
+  # ############## #
+
+  # haustothehaus
+
+  haus_dir = '/Users/daniel/src/haustothehaus/'
+  haus_samps = '/Users/daniel/recording/haus_samples'
+  run_file "#{haus_dir}toolbox.rb"
+
+  #
+  # haustothehaus
+  #
+
+  use_bpm 128
+
+  live_loop :out do
+    with_fx :slicer, phase: 0.5, probability: 0.5  do
+      entourage
+    end
+
+    car_door_close
+    #keys
+
+    sleep 8
+  end
+
+  live_loop :gravel, sync: :out do
+    #nm_sync(:A1, :out)
+    gravel_bd
+    sleep 0.5
+    haus_keys
+    sleep 0.5
+  end
+
+  live_loop :bass, sync: :out do
+    stop
+    bassment_at(0.5)
+
+    sleep 16
+  end
+
+
+  live_loop :deep_house_bassline do
+    sync :out if tick % 8 == 0
+    #sync :out if look % 8 == 0
+    #nm_sync(:A2, :out)
+    duration = 4 #+ 4*get(:fader_l_state)
+    in_thread do
+
+      note = chord(:D2, :major).choose
+
+      use_synth :beep
+
+      adsr = {
+        attack: 0.1,
+        decay: 0.2,
+        sustain: 0.7 * duration,
+        release: 0.2 * duration
+      }
+
+      with_fx :reverb do
+
+        use_tuning :equal
+        play note, adsr, amp: 0.2
+        play note - 12, adsr, amp: 0.1
+        play note + 19, adsr, amp: 0.15
+
+        sleep 0.1
+
+        use_tuning :pythagorean
+        play note, adsr, amp: 0.1
+        play note - 12, adsr, amp: 0.2
+        play note + 19, adsr, amp: 0.15
+
+      end
+
+    end
+
+    sleep 8#*get(:knob_l_state)+0.1
+  end
+
+
+#+END_SRC
+* <2019-05-01 Wed> old stuff in the garage
+#+BEGIN_SRC ruby
+  # define :big_horn do
+  #   with_fx :echo, phase: 2, decay: 3, mix: 0.25 do
+  #     sample haus_samps, "brown_horns_2", attack: 1, beat_stretch: 4
+  #   end
+  # end
+
+  # define :horny_bass do |note, len|
+  #   use_synth :fm
+  #   pw = 0.25
+  #   s = play note, attack: 0.1*(1.0/len), attack_level: 1, decay: 0.195*len, sustain: 0.1, sustain_level: 0.75, release: 0.3*len,
+  #            divisor: 1.501, depth: 2,
+  #            #pulse_width: pw, pulse_width_slide: 1*len,
+  #            cutoff: 115, cutoff_slide: 2
+  #   control s, cutoff: 95
+  # end
+#+END_SRC
