@@ -64,10 +64,10 @@ end
 
 # use like set(:garage, :A)
 
-define :get_bank_val_or_default do |key,default|
-  bank = get(key)
-  return default if bank.nil?
-  get(bank)
+define :get_bank_val_or_default do |key, default|
+  val = get(key)
+  return default if val.nil?
+  val
 end
 
 # play_synth_melody
@@ -86,7 +86,6 @@ define :play_synth_melody do |synth, melody|
       time_index = melody[:times].index(time)
       send(synth, melody[:notes][time_index], melody[:durations][time_index])
     end
-    sleep melody[:times].max
   end
 end
 

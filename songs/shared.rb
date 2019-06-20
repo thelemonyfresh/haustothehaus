@@ -22,32 +22,23 @@ define :sub_bass_synth do |note, length|
 
   amp = 1
 
-  with_fx :flanger do
+  #with_fx :flanger do
+  with_fx :pan, pan: -0.3 do
+    with_fx :band_eq, freq: 63, db: -5 do
 
-    with_fx :pan, pan: -0.3 do
-      with_fx :band_eq, freq: 63, db: -5 do
+      play note, amp: amp,
+           attack: 0.1 * length, decay: 0.5 * length,  sustain: 0 * length, release: 0.375 * length,
+           attack_level: 0.2,
+           cutoff: 120, cutoff_slide: 0.75,
+           depth: 0.75
 
-        play note, amp: amp,
-             attack: 0.1 * length, decay: 0.5 * length,  sustain: 0 * length, release: 0.375 * length,
-             attack_level: 0.2,
-             cutoff: 120, cutoff_slide: 0.75,
-             depth: 0.75
-
-        play note+7, amp: amp / 4.0,
-             attack: 0.1 * length, decay: 0.5 * length, sustain: 0 * length, release: 0.375 * length,
-             attack_level: (amp+0.1)/2.0,
-             cutoff: 120, cutoff_slide: 0.75,
-             depth: 0.75
-
-        play note+12, amp: amp / 16.0,
-             attack: 0.2 * length, decay: 0.5 * length, sustain: 0 * length, release: 0.375 * length,
-             attack_level: (amp+0.1)/2.0,
-             cutoff: 120, cutoff_slide: 0.75,
-             depth: 0.75
-      end
+      play note+7, amp: amp / 4.0,
+           attack: 0.1 * length, decay: 0.5 * length, sustain: 0 * length, release: 0.375 * length,
+           attack_level: (amp+0.1)/2.0,
+           cutoff: 120, cutoff_slide: 0.75,
+           depth: 0.75
     end
   end
-
 
   in_thread do
     color '.big-haus', length / 2.0, 'sonic_blue'
@@ -59,7 +50,7 @@ end
 define :deep_haus_synth do |note, duration|
   in_thread do
 
-    #note = chord(:D2, :major).choose
+    amp = 1
 
     use_synth :beep
 
@@ -70,20 +61,27 @@ define :deep_haus_synth do |note, duration|
       release: 0.2 * duration
     }
 
+    gap = (duration/4.0) * 60
+    min = 80 - gap/2.0
+    max = 80 + gap/2.0
+
+    max = max > 125 ? 125 : max
+    min = min < 25 ? 25 : min
+
+    with_fx :level, amp: 0.85 do
       with_fx :reverb do
+        with_fx :ixi_techno, cutoff_max: max, cutoff_min: min, phase: duration do
+          use_tuning :equal
+          play note, adsr, amp: amp/8.0, pan: 0.1
 
-        use_tuning :equal
-        play note, adsr, amp: 0.25
+          sleep 0.1
 
-        play note - 12, adsr, amp: 0.1
-        play note + 19, adsr, amp: 0.15
-
-        sleep 0.1
-
-        use_tuning :pythagorean
-        play note - 12, adsr, amp: 0.2
-        play note + 19, adsr, amp: 0.15
-
+          use_synth :tri
+          use_tuning :pythagorean
+          play note - 12, adsr, amp: amp/4.0, pan: -0.5
+          play note + 19, adsr, amp: amp/16.0, pan: 0.3
+        end
+      end
     end
   end
 end
