@@ -83,7 +83,7 @@ end
 # rain
 # 8
 
-define :rain do |amt = get_bank_val_or_default(:garage_bank, 0.5)|
+define :rain do |amt = get_bank_val_or_default(:garage, 0.5)|
   seed = range(0,0.5,0.05).choose
   s = sample haus_samps, 'rain', amp: amt,
              start: seed + 0.19, finish: seed + 0.22

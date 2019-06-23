@@ -36,7 +36,7 @@ define :color do |selector, beats, color|
   color = '#5cc639' if color == 'sonic_green'
   color = '#3a62c1' if color == 'sonic_blue'
   color = '#f9de2a' if color == 'haus_yellow'
-
+  viz 'color', selector, beats, color, ''
 end
 
 define :text do |text|
@@ -64,10 +64,10 @@ end
 
 # use like set(:garage, :A)
 
-define :get_bank_val_or_default do |key,default|
-  bank = get(key)
-  return default if bank.nil?
-  get(bank)
+define :get_bank_val_or_default do |key, default|
+  val = get(key)
+  return default if val.nil?
+  val
 end
 
 # play_synth_melody
@@ -86,7 +86,6 @@ define :play_synth_melody do |synth, melody|
       time_index = melody[:times].index(time)
       send(synth, melody[:notes][time_index], melody[:durations][time_index])
     end
-    sleep melody[:times].max
   end
 end
 
