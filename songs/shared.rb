@@ -41,7 +41,15 @@ define :sub_bass_synth do |note, length|
   end
 
   in_thread do
-    color '.big-haus', length / 2.0, 'sonic_blue'
+    colors = ring('sonic_blue', 'sonic_green', 'sonic_pink')
+    puts note(note)
+    puts note(:D2)
+    amt = (note(note) - note(:D2))/(12.0)
+    amt = amt > 1 ? 1 : amt
+    puts amt
+    clr = ring_amt(colors, amt)
+    puts clr
+    color '.big-haus', length / 2.0, clr
     sleep length / 2.0
     color '.big-haus', length, 'haus_yellow'
   end

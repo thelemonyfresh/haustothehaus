@@ -36,7 +36,7 @@ define :color do |selector, beats, color|
   color = '#5cc639' if color == 'sonic_green'
   color = '#3a62c1' if color == 'sonic_blue'
   color = '#f9de2a' if color == 'haus_yellow'
-
+  viz 'color', selector, beats, color, ''
 end
 
 define :text do |text|

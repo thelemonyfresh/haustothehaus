@@ -4,7 +4,7 @@ haus_samps = '/Users/daniel/recording/haus_samples'
 # Patterns.
 #
 
-# entourageq
+#
 # 8
 
 define :garage_door do |amt = get_bank_val_or_default(:garage, 0)|
@@ -13,7 +13,7 @@ define :garage_door do |amt = get_bank_val_or_default(:garage, 0)|
   in_thread do
 
     ph = ring_amt(ring(1,1,0.5,0.25),amt)
-    pr = 1 - amt/2.5
+    pr = 1 - amt/2.5 # better prob for 0.5+
     mx = ring_amt(ring(0,1,1,1,0),amt)
 
     with_fx :slicer, phase: ph, probability: pr, mix: mx  do
@@ -23,22 +23,30 @@ define :garage_door do |amt = get_bank_val_or_default(:garage, 0)|
                                  attack: 0.01, release: 0.5,
                                  pan: -0.9, pan_slide: 1)
           control gs1, pan: 0.2
+          rotate '.h.little-haus', 0.25, -15*(1-amt)
           at 0.9 do
             gs2 = garage_door_opts(start: 0.423, finish: 0.45,
                                    attack: 0.075,
                                    pan: -0.3, pan_slide: 2)
             control gs2, pan: 0.3
+            rotate '.a.little-haus', 0.25, -15*(1-amt)
           end
           at 1.85 do
             gs3 = garage_door_opts(start: 0.45, finish: 0.47,
                                    attack: 0.14, attack_level: 1.2,
                                    pan: 0, pan_slide: 1)
             control gs3, pan: 0.7
+            rotate '.u.little-haus', 0.25, -15*(1-amt)
           end
           at 4 do
             gs4 = garage_door_opts(start: 0.69, finish: 0.81,
                                    pan: 0.75, pan_slide: 4)
             control gs4, pan: -0.5
+            rotate '.h.little-haus', 0.5, 0
+            sleep 0.5
+            rotate '.a.little-haus', 0.5, 0
+            sleep 1.5
+            rotate '.u.little-haus', 0.5, 0
           end
         end
       end
@@ -54,10 +62,10 @@ define :roses do |amt = get_bank_val_or_default(:garage, 0.5)|
     falling_text 'roses', 1
   end
 
-  amt = 0.65 + amt * 0.35
+  amt = 0.9 - amt * 0.4
   in_thread do
     with_fx :reverb, room: 0.7165354 do
-      chord(:D4,:major7, invert: 1).reverse.each do |nt|
+      chord(:D4,:major7, invert: 2).reverse.each do |nt|
         co = ring(80*amt,110*amt**2,100*amt**3,100*amt)
         with_fx :lpf, cutoff: co.tick do
 
@@ -84,8 +92,8 @@ durations = []
   in_thread do
     case amt
     when 0..0.25
-      with_fx :level, amp: 0.6 do
-        with_fx :slicer, phase: 1, phase_offset: 0.25, pulse_width: 0.5, wave: 3, mix: 1 do
+      with_fx :level, amp: 0.5 + 2*amt do
+        with_fx :slicer, phase: 1, phase_offset: 0.5, pulse_width: 0.5, wave: 1, smooth: 0.1, mix: amt*3.9  do
           sub_bass_synth(nts[0], 16)
         end
       end
@@ -130,7 +138,7 @@ define :tires do |amt = get_bank_val_or_default(:garage, 0)|
   durations = []
 
   case amt
-  when 0.25..0.45
+  when 0.20..0.45
     notes = chord(:D3, :major, invert: 1)
     times = ring(0,12)
     durations = ring(8,4)
@@ -169,7 +177,7 @@ define :tires do |amt = get_bank_val_or_default(:garage, 0)|
      with_fx :lpf, cutoff: get_bank_val_or_default(:garage_knob,0.75) do |fx|
       set(:garage_knob_fx, fx)
       set(:garage_knob_fx_param, :cutoff)
-      play_synth_melody(:deep_haus_synth_dev, melody)
+      play_synth_melody(:deep_haus_synth, melody)
     end
   end
 end
