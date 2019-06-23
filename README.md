@@ -2,7 +2,7 @@
 House music with house sounds. Live coded with [Sonic Pi](https://sonic-pi.net/).
 
 ## videos
-* [garage (live in Paris, June 2019)](https://youtu.be/KhOGhzWaOqc)
+* [garage (live in Paris, June 2019)](https://youtu.be/o-vcgoDpCZw)
 * [garage (live labour day 2018)](https://youtu.be/KhOGhzWaOqc)
 
 ## logo
