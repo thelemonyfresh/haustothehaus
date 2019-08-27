@@ -30,6 +30,26 @@ live_loop :thirty_two, sync: :eight do
   sleep 32
 end
 
+###### indigo samples
+
+##| sample '/Users/daniel/recording/haus_samples', 'indigo',
+##|   rate: 1.0,
+##|   start: 0.172,
+##|   finish: 0.205
+
+##| sample '/Users/daniel/recording/haus_samples', 'indigo',
+##|   rate: 1.0,
+##|   start: 0.3475,
+##|   finish: 0.3525
+
+  with_fx :lpf, cutoff: (range(127,49, 20) + ring(127)).mirror.tick do
+    sample '/Users/daniel/recording/haus_samples', 'indigo',
+      rate: 1.03,
+      start: 0.404,
+      finish: 0.4355
+    sleep 4
+  end
+
 
 ###### NOTES ######
 use_bpm 130
@@ -45,3 +65,4 @@ use_bpm 130
 # let the grooves sink in a bit more, only a gradual change at a time, c.f. want you forever carl cox
 # better use of repeating initialism of sample, end part of sample later
 # off-beat melody part is more what I'm going for...
+

@@ -13,5 +13,39 @@ svg { position:fixed; top:0; left:0; height:100%; width:100% }
 }
 
 .text-yellow {
-  color: #f9de2a;
+  fill: #f9de2a;
+  position: relative;
+}
+
+.range-slider {
+  color: white;
+  position: absolute;
+  width: 100vw;
+  font-size: 50px;
+  z-index: 1;
+}
+
+.a {
+  left: 48vw;
+}
+
+.b {
+  left: 51.9vw;
+}
+
+.beats-line {
+  position: absolute;
+  height: 10px;
+  width: 100vw;
+  top: 50vh;
+  background: #f9de2a;
+}
+
+div.vertical-line{
+  width: 27px; /* Line width */
+  background-color:  #f9de2a; /* Line color */
+  height: 100%; /* Override in-line if you want specific height. */
+  position: absolute;
+  left: 50vw;
+  z-index: 0;
 }

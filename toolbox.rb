@@ -12,6 +12,8 @@ run_file '/Users/daniel/src/haustothehaus/songs/foyer/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/sounds.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/patterns.rb'
 
+run_file "/Users/daniel/src/talldan_sonicpi/numark_sampler.rb"
+
 # VISUALIZATION HELPERS
 
 define :viz do |type, selector, beats, val1, val2|
@@ -45,6 +47,10 @@ end
 
 define :falling_text do |text, duration|
   viz 'falling_text', '', duration, text, '#d6117a'
+end
+
+define :cue_position do |new_total, bank|
+  viz 'cue_position', bank, 0, new_total, ''
 end
 
 define :tick_key do

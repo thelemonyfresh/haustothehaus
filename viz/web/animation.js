@@ -66,6 +66,16 @@ $('document').ready( function(){
     if (actionType == 'falling_text') {
       fallingText(val1, duration);
     };
+
+    if (actionType == 'cue_position') {
+      console.log('numark cue');
+      console.log(`w: ${parseFloat(window.innerWidth)}`);
+      console.log(`val1: ${parseFloat(val1)}`);
+      let position = parseFloat(window.innerWidth) * parseFloat(val1) ;//* parseFloat(val1);
+      console.log(`pos: ${position}`);
+      $(selector).css('top', position);
+
+    }
   });
 
   function fallingText(text, duration) {
