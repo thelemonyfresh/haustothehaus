@@ -83,12 +83,6 @@ end
 # rain
 # 8
 
-define :rain do |amt = get_bank_val_or_default(:garage, 0.5)|
-  seed = range(0,0.5,0.05).choose
-  s = sample haus_samps, 'rain', amp: amt,
-             start: seed + 0.19, finish: seed + 0.22
-end
-
 define :windchime_num do |n|
   sample haus_samps, 'bells.aif',
          beat_stretch: 32,
