@@ -24,3 +24,99 @@ uncomment do
 end
 
 # get some double-kick action in this bitch
+
+
+live_loop :foyer do
+  sleep 1
+  # rom_the_foyer
+  #numark_sampler(haus_samps, 'sands')
+  
+  rocking_chair
+  
+  sleep 3
+end
+
+live_loop :eight, sync: :foyer do
+
+  with_fx :bpf, cutoff: range(40,120,20).mirror.tick do
+    sample '/Users/daniel/recording/haus_samples', 'sands',
+      amp: 1,
+      rate: 0.91,
+      start: 0.944,
+      finish: 0.9965
+  end
+  
+  sleep 8
+end
+
+live_loop :one, sync: :foyer do
+  count = ((tick(:inside)) % 32).floor
+  puts count
+  unless count == 31
+    mat_bd
+    foyer_snare if count % 2 == 1
+    sleep 0.5
+    shoes
+else
+    sleep 0.5
+  end
+    sample '/Users/daniel/recording/haus_samples', 'sands',
+    amp: 0,
+        rate: 0.96,
+        start: 0.629,
+        finish: 0.6585
+    sleep 0.5
+  
+end
+
+define :shoes do
+  sample '/Users/daniel/recording/haus_samples', 'sands',
+    rate: 1.04,
+    start: 0.7245,
+    finish: 0.7325
+end
+
+define :rocking_chair do
+  with_fx :lpf, cutoff: 80 do
+    sample '/Users/daniel/recording/haus_samples', 'sands',
+      rate: 0.91,
+      start: 0.843,
+      finish: 0.9465
+  end
+  
+end
+
+define :foyer_snare do
+  #start = 0.1175
+  start = 0.18
+  finish = 0.21
+  sample '/Users/daniel/recording/haus_samples', 'sands',
+    rate: 1.24,
+    start: start,
+    finish: finish,
+    attack: 0.01,
+    decay: 0.1,
+    release: 0.05
+end
+
+define :from_the_foyer do
+  #start = 0.1175 2
+  start = 0.24
+  finish = 0.346
+  mx = range(0,1,0.1).mirror.tick
+  ph = (range(0,1,0.1)*0.75).mirror.look
+  puts mx
+  with_fx :octaver, mix: 0 do
+    sample '/Users/daniel/recording/haus_samples', 'sands',
+      rate: 1.24,
+      start: start,
+      finish: finish,
+      release: 0.1
+  end
+end
+
+# 1. kick drum plus some hh sound (car door close?)
+# 2. garage door sound
+# 3.
+
+

@@ -1,7 +1,10 @@
 haus_samps = '/Users/daniel/recording/haus_samples/'
 
-define :lightswitch do |length|
-  sample haus_samps, 'lightswitch', start: 0.202 - (0.02 * length), finish: 0.2 + (0.3 * length), rate: 1.05, decay: 0.25
+define :lightswitch do
+  sample '/Users/daniel/recording/haus_samples', 'lightswitch',
+         rate: 1,
+         start: 0.196,
+         finish: 0.3675
 end
 
 define :leaky_door do # try breaking it down with the bitrate effect
