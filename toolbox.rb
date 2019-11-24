@@ -96,6 +96,18 @@ define :play_synth_melody do |synth, melody|
   end
 end
 
+[[:two,2],[:four,4],[:eight,8],[:sixteen,16],[:thirty_two,32]].each do |n|
+  define n[0] do |&block|
+    in_thread do
+      n[1].times do
+
+        block.call
+      end
+    end
+  end
+end
+
+
 #
 # Ramp patterns.
 #
