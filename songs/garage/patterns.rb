@@ -7,52 +7,80 @@ haus_samps = '/Users/daniel/recording/haus_samples'
 #
 # 8
 
-define :garage_door do |amt = get_bank_val_or_default(:garage_amt, 0)|
-  falling_text 'garage door', 8
+# define :garage_door do |amt = get_bank_val_or_default(:garage_amt, 0)|
+#   falling_text 'garage door', 8
 
-  in_thread do
+#   in_thread do
 
-    ph = ring_amt(ring(1,1,0.5,0.25),amt)
-    pr = 1 - amt/2.5 # better prob for 0.5+
-    mx = ring_amt(ring(0,1,1,1,0),amt)
+#     ph = ring_amt(ring(1,1,0.5,0.25),amt)
+#     pr = 1 - amt/2.5 # better prob for 0.5+
+#     mx = ring_amt(ring(0,1,1,1,0),amt)
 
-    with_fx :slicer, phase: ph, probability: pr, mix: mx  do
-      with_fx :level, amp: 0.7 do
-        with_fx :compressor do
-          gs1 = garage_door_opts(start: 0.4, finish: 0.44,
-                                 attack: 0.01, release: 0.5,
-                                 pan: -0.9, pan_slide: 1)
-          control gs1, pan: 0.2
-          rotate '.h.little-haus', 0.25, -15*(1-amt)
-          at 0.9 do
-            gs2 = garage_door_opts(start: 0.423, finish: 0.45,
-                                   attack: 0.075,
-                                   pan: -0.3, pan_slide: 2)
-            control gs2, pan: 0.3
-            rotate '.a.little-haus', 0.25, -15*(1-amt)
-          end
-          at 1.85 do
-            gs3 = garage_door_opts(start: 0.45, finish: 0.47,
-                                   attack: 0.14, attack_level: 1.2,
-                                   pan: 0, pan_slide: 1)
-            control gs3, pan: 0.7
-            rotate '.u.little-haus', 0.25, -15*(1-amt)
-          end
-          at 4 do
-            gs4 = garage_door_opts(start: 0.69, finish: 0.81,
-                                   pan: 0.75, pan_slide: 4)
-            control gs4, pan: -0.5
-            rotate '.h.little-haus', 0.5, 0
-            sleep 0.5
-            rotate '.a.little-haus', 0.5, 0
-            sleep 1.5
-            rotate '.u.little-haus', 0.5, 0
-          end
-        end
-      end
-    end
-  end
-end
+#     with_fx :slicer, phase: ph, probability: pr, mix: mx  do
+#       with_fx :level, amp: 0.7 do
+#         with_fx :compressor do
+#           gs1 = garage_door_opts(start: 0.4, finish: 0.44,
+#                                  attack: 0.01, release: 0.5,
+#                                  pan: -0.9, pan_slide: 1)
+#           control gs1, pan: 0.2
+#           rotate '.h.little-haus', 0.25, -15*(1-amt)
+#           at 0.9 do
+#             gs2 = garage_door_opts(start: 0.423, finish: 0.45,
+#                                    attack: 0.075,
+#                                    pan: -0.3, pan_slide: 2)
+#             control gs2, pan: 0.3
+#             rotate '.a.little-haus', 0.25, -15*(1-amt)
+#           end
+#           at 1.85 do
+#             gs3 = garage_door_opts(start: 0.45, finish: 0.47,
+#                                    attack: 0.14, attack_level: 1.2,
+#                                    pan: 0, pan_slide: 1)
+#             control gs3, pan: 0.7
+#             rotate '.u.little-haus', 0.25, -15*(1-amt)
+#           end
+#           at 4 do
+#             gs4 = garage_door_opts(start: 0.69, finish: 0.81,
+#                                    pan: 0.75, pan_slide: 4)
+#             control gs4, pan: -0.5
+#             rotate '.h.little-haus', 0.5, 0
+#             sleep 0.5
+#             rotate '.a.little-haus', 0.5, 0
+#             sleep 1.5
+#             rotate '.u.little-haus', 0.5, 0
+#           end
+#         end
+#       end
+#     end
+#   end
+# end
+
+# define :garage_door do |amt = get_bank_val_or_default(:garage_amt, 0)|
+#   falling_text 'garage door', 8
+
+#   in_thread do
+
+#     sample '/Users/daniel/recording/haus_samples', 'garage_door',
+#            rate: 1.0,
+#            start: 0.146,
+#            finish: 0.173
+
+#     sleep 1
+#     sample '/Users/daniel/recording/haus_samples', 'garage_door',
+#            rate: 1.0,
+#            start: 0.162,
+#            finish: 0.1865
+#     sleep 3
+#     sample '/Users/daniel/recording/haus_samples', 'garage_door',
+#            rate: 1.0,
+#            start: 0.236,
+#            finish: 0.264
+#     sleep 3
+#     sample '/Users/daniel/recording/haus_samples', 'garage_door',
+#            rate: 1.0,
+#            start: 0.255,
+#            finish: 0.2695
+#   end
+# end
 
 # roses
 # 1

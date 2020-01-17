@@ -59,35 +59,35 @@ end
 # # 0.5
 
 define :haus_keys do
-  ech = spread(5,16).tick(:keys_echo) ? 1 : 0
+  ech = 0 #spread(5,16).tick(:keys_echo) ? 1 : 0
   ph = spread(7,16).tick(:keys_ph) ? 0.24 : 0.49
 
-  with_fx :echo, decay: 1, mix: ech, phase: ph do
-    with_fx :pan, pan: -0.5, amp: 0.75 do
+  #with_fx :echo, decay: 1, mix: ech, phase: ph do
+    with_fx :pan, pan: -0.5, amp: 0.85 do
       sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-        rate: 2,
-        start: 0.803,
-        finish: 0.8895
-      numark_sampler_a(haus_samps, 'neu_haus_keys')
+             rate: 2,
+             start: 0.803,
+             finish: 0.8895
+      # numark_sampler_a(haus_samps, 'neu_haus_keys')
 
       sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-        rate: 1,
-        start: 0.2295,
-        finish: 0.23884
+             rate: 1,
+             start: 0.2295,
+             finish: 0.23884
     end
     with_fx :pan, pan: 0.5, amp: 0.75 do
-      numark_sampler_b(haus_samps, 'neu_haus_keys')
+      #numark_sampler_b(haus_samps, 'neu_haus_keys')
       sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-        rate: 2,
-        start: 0.2295,
-        finish: 0.26884
+             rate: 2,
+             start: 0.2295,
+             finish: 0.26884
 
       sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-        rate: 1,
-        start: 0.809,
-        finish: 0.8195
+             rate: 1,
+             start: 0.809,
+             finish: 0.8195
     end
-  end
+  #end
 
   #pat = ring(1)#range(8,16,1) + [31, 32, 33, 41, 42]
   #sample haus_samps, "neu_haus_keys", cutoff: 115, onset: pat.tick(:hk)
@@ -97,8 +97,6 @@ end
   #   pat = range(8,16,1) + [31, 32, 33, 41, 42]
   #   sample haus_samps, "neu_haus_keys", cutoff: 115, onset: pat.tick(:hk)
   #   pulse '.little-haus.s', 0.25
-
-end
 
 # garage_door
 # 32
@@ -117,8 +115,6 @@ define :garage_door_opts do |hsh|
   end
   s
 end
-
-
 
 # car
 # n/t

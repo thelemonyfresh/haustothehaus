@@ -19,7 +19,7 @@ run_file "/Users/daniel/src/talldan_sonicpi/numark_sampler.rb"
 
 define :viz do |type, selector, beats, val1, val2|
   dur = 1000 * beats * 60.0 / current_bpm
-  osc "/#{dur}/#{selector}/#{type}/#{val1}/#{val2}"
+  #osc "/#{dur}/#{selector}/#{type}/#{val1}/#{val2}"
 end
 
 define :flash do |selector, beats|

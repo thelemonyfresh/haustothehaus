@@ -1,12 +1,8 @@
 define :seem_to do
-  with_fx :lpf, cutoff: range(60,120,10).mirror.tick do
-
     sample '/Users/daniel/recording/haus_samples', 'indigo',
       rate: 1.03,
       start: 0.406,
       finish: 0.425
-
-  end
 end
 
 define :care do
@@ -68,8 +64,6 @@ define :palms do
   end
 end
 
-
-
 define :yah do
   in_thread do
     16.times do |n|
@@ -104,4 +98,8 @@ define :du_garage do
          rate: 1.546309,
          start: 0.511,
          finish: 0.5795039370078741
+end
+
+define :two_paths do
+
 end
