@@ -19,27 +19,8 @@ define :twang do
     finish: 0.3525
 end
 
-
-# louder, more prominent at peak
-# define :garage_band do
-#   with_fx :bpf, centre: range(60,120,10).mirror.tick, res: 0.01, res_slide: 4 do |bpf|
-#     control bpf, res: 0.1
-#     sample '/Users/daniel/recording/haus_samples', 'indigo',
-#       rate: 1.0,
-#       start: 0.049 ,
-#       finish: 0.1
-#   end
-# end
-
-define :gong_a do
-  sample '/Users/daniel/recording/haus_samples', 'indigo',
-    rate: 1.0,
-    start: 0.172,
-    finish: 0.205
-end
-
-
 # help
+
 define :help do
   sample '/Users/daniel/recording/haus_samples', 'indigo',
     rate: 1,
@@ -47,22 +28,8 @@ define :help do
     finish: 0.450
 end
 
-define :palms do
-  start = knit(0.0795, 2, 0.0845, 2, 0.0895, 2, 0.075, 2).tick(:palms) #0.075, 0.795, 0.81, 0.845, 0.87, 0.895, 0.945, 0.995
-  len = 0.005
-  #puts start
-  #puts start + len
-  with_fx :lpf, cutoff: range(70, 110, 5).mirror.tick do
-    with_fx :echo , phase: 0.75 do
-      sample '/Users/daniel/recording/haus_samples', 'palmiers',
-             rate: 1.0,
-             attack: 0.01, decay: 0.5, sustain: 0.25, release: 0.75,
-             start: start,
-             finish: start + len
-
-    end
-  end
-end
+# yah
+# 16
 
 define :yah do
   in_thread do
@@ -101,5 +68,12 @@ define :du_garage do
 end
 
 define :two_paths do
-
+  2.times do
+    with_fx :lpf, cutoff: range(60,120,10).mirror.tick do
+      seem_to
+      sleep 2.5
+      care
+      sleep 1.5
+    end
+  end
 end
