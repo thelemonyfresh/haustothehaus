@@ -56,12 +56,12 @@ end
 
 define :du_garage do
   # du garage
-  sample '/Users/daniel/recording/haus_samples', 'palmiers', amp: 0,
+  sample '/Users/daniel/recording/haus_samples', 'palmiers', amp: 1,
          rate: 1,
          start: 0.927,
          finish: 0.9773937007874016
 
-  sample '/Users/daniel/recording/haus_samples', 'palmiers', amp: 0,
+  sample '/Users/daniel/recording/haus_samples', 'palmiers', amp: 1,
          rate: 1.546309,
          start: 0.511,
          finish: 0.5795039370078741

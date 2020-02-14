@@ -30,7 +30,7 @@ define :windy_melody do |amt = get_bank_val_or_default(:garage_amt, 0.5)|
 end
 
 # path
-# 32
+# 8
 define :path do
   in_thread do
     16.times do

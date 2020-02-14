@@ -7,7 +7,8 @@ haus_samps = "/Users/daniel/recording/haus_samples"
 # garage_door
 # 32
 define :garage_door do
-  sample haus_samps, 'west_garage_door'
+
+  sample haus_samps, 'west_garage_door', amp: 2
 end
 
 # gravel_bd
@@ -45,7 +46,7 @@ end
 define :keys do
   falling_text "keys", 6
   with_fx :reverb, room: 0.1, mix: 0.4, damp: 0.6  do
-    sample haus_samps, "neu_haus_keys", start: 0.087, finish: 0.44, release: 1
+    sample haus_samps, "neu_haus_keys", amp: 2, start: 0.087, finish: 0.44, release: 1
   end
 end
 
@@ -55,7 +56,7 @@ define :haus_keys do
   ech = 0 #spread(5,16).tick(:keys_echo) ? 1 : 0
   ph = spread(7,16).tick(:keys_ph) ? 0.24 : 0.49
 
-  with_fx :pan, pan: -0.5, amp: 0.85 do
+  with_fx :pan, pan: -0.5, amp: 1 do
     sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
            rate: 2,
            start: 0.803,
@@ -67,7 +68,7 @@ define :haus_keys do
            start: 0.2295,
            finish: 0.23884
   end
-  with_fx :pan, pan: 0.5, amp: 0.75 do
+  with_fx :pan, pan: 0.5, amp: 1 do
     #numark_sampler_b(haus_samps, 'neu_haus_keys')
     sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
            rate: 2,
