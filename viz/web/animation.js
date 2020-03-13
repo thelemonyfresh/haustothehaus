@@ -10,7 +10,10 @@ $('document').ready( function(){
 
   // catch and process osc messages
   port.on("message", async function (oscMessage) {
-    console.log("asdf");
+    console.log("oscmessage:");
+    console.log(oscMessage);
+    console.log("args");
+    console.log(oscMessage.args);
     var [,duration,selector,actionType,val1,val2] = oscMessage.address.split('/');
     console.log("ActionType: " + actionType);
     console.log("Duration: " + duration);
