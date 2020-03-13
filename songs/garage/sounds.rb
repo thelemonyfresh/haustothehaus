@@ -6,9 +6,19 @@ haus_samps = "/Users/daniel/recording/haus_samples"
 
 # garage_door
 # 32
-define :garage_door do
 
-  sample haus_samps, 'west_garage_door', amp: 2
+define :haus_garage_door do
+  st = ring(0,0.5).tick(:hgd_st)
+  fn = ring(0.5,1).tick(:hgd_fn)
+
+  puts st
+  puts fn
+
+  with_fx :flanger, mix: 1, phase: 8, delay: 5 do
+    sample haus_samps, "west_garage_door", amp: 0.8,
+           start: st,
+           finish: fn
+  end
 end
 
 # gravel_bd
@@ -16,37 +26,30 @@ end
 define :gravel_bd do
   with_fx :reverb, mix: 0.2, room: 0.5, damp: 1 do
     with_fx :distortion, distort: 0.3 do
-      sample :bd_haus, attack: 0.01, sustain: 0.1, release: 0.1
+      sample :bd_haus, amp: 0.7, attack: 0.01, sustain: 0.1, release: 0.1
       with_fx :lpf, cutoff: 50 do
         with_fx :octaver, subsub_amp: 1, sub_amp: 1, super_amp: 0 do
-          sample :drum_tom_mid_soft, amp: 0, start: 0.01,
+          sample :drum_tom_mid_soft, amp: 1, start: 0.01,
                  attack: 0.001, attack_level: 1.25,
                  decay: 0.01,
                  sustain: 0,
                  release: 0.15
         end
       end
-      use_synth :beep
-      play :D1, amp: 0.8,
-           attack: 0.01, attack_level: 1.5,
-           decay: 0.25,
-           release: 0.3
-      play :D0, amp: 0.2,
-           attack: 0.01, attack_level: 1.5,
-           decay: 0.25,
-           release: 0.1
     end
   end
 
   #pulse %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:big), 0.75
 end
 
+
+
 # keys
 # 4
 define :keys do
   falling_text "keys", 6
   with_fx :reverb, room: 0.1, mix: 0.4, damp: 0.6  do
-    sample haus_samps, "neu_haus_keys", amp: 2, start: 0.087, finish: 0.44, release: 1
+    sample haus_samps, "neu_haus_keys", amp: 1.5, start: 0.087, finish: 0.44, release: 1
   end
 end
 
@@ -56,29 +59,31 @@ define :haus_keys do
   ech = 0 #spread(5,16).tick(:keys_echo) ? 1 : 0
   ph = spread(7,16).tick(:keys_ph) ? 0.24 : 0.49
 
-  with_fx :pan, pan: -0.5, amp: 1 do
-    sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-           rate: 2,
-           start: 0.803,
-           finish: 0.8895
-    # numark_sampler_a(haus_samps, 'neu_haus_keys')
+  with_fx :hpf, cutoff: 100 do
+    with_fx :pan, pan: -0.5, amp: 1 do
+      sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
+             rate: 2,
+             start: 0.803,
+             finish: 0.8895
+      # numark_sampler_a(haus_samps, 'neu_haus_keys')
 
-    sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-           rate: 1,
-           start: 0.2295,
-           finish: 0.23884
-  end
-  with_fx :pan, pan: 0.5, amp: 1 do
-    #numark_sampler_b(haus_samps, 'neu_haus_keys')
-    sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-           rate: 2,
-           start: 0.2295,
-           finish: 0.26884
+      sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
+             rate: 1,
+             start: 0.2295,
+             finish: 0.23884
+    end
+    with_fx :pan, pan: 0.5, amp: 1 do
+      #numark_sampler_b(haus_samps, 'neu_haus_keys')
+      sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
+             rate: 2,
+             start: 0.2295,
+             finish: 0.26884
 
-    sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-           rate: 1,
-           start: 0.809,
-           finish: 0.8195
+      sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
+             rate: 1,
+             start: 0.809,
+             finish: 0.8195
+    end
   end
 end
 

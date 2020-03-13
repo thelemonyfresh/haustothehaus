@@ -19,40 +19,58 @@ end
 #
 
 define :sub_bass_synth do |note, length|
-  use_synth :beep
+  use_synth :fm
 
   amp = 1
 
   #with_fx :flanger do
-  with_fx :pan, pan: -0.3 do
-    with_fx :band_eq, freq: 63, db: -5 do
+  with_fx :pan, pan: -1 do
+    # with_fx :band_eq, freq: 63, db: -5 do
 
-      play note, amp: amp,
-           attack: 0.1 * length, decay: 0.5 * length,  sustain: 0 * length, release: 0.375 * length,
-           attack_level: 0.2,
-           cutoff: 120, cutoff_slide: 0.75,
-           depth: 0.75
+    play note, amp: amp,
+         attack: 0.1, decay: 0.5 * length,  sustain: 0 * length, release: 0.375 * length,
+         attack_level: 1.1,
+         #cutoff: 120, cutoff_slide: 0.75,
+         depth: 0.75,
+         pitch: 0.1
 
-      play note+7, amp: amp / 4.0,
-           attack: 0.1 * length, decay: 0.5 * length, sustain: 0 * length, release: 0.375 * length,
-           attack_level: (amp+0.1)/2.0,
-           cutoff: 120, cutoff_slide: 0.75,
-           depth: 0.75
-    end
+    play note+3, amp: amp / 2.0,
+         attack: 0.01, decay: 0.5 * length, sustain: 0 * length, release: 0.375 * length,
+         attack_level: (amp+0.1)/2.0,
+         #cutoff: 120, cutoff_slide: 0.75,
+         depth: 0.75,
+         pitch: 0.1
+
+    play note-2, amp: amp / 2.0,
+         attack: 0.05, decay: 0.3 * length, sustain: 0.1*length, release: 0.2,
+         depth: 1,
+         pitch: 0.1
+    #end
   end
 
-  in_thread do
-    colors = ring('sonic_blue', 'sonic_green', 'sonic_pink')
-    puts note(note)
-    puts note(:D2)
-    amt = (note(note) - note(:D2))/(12.0)
-    amt = amt > 1 ? 1 : amt
-    puts amt
-    clr = ring_amt(colors, amt)
-    puts clr
-    color '.big-haus', length / 2.0, clr
-    sleep length / 2.0
-    color '.big-haus', length, 'haus_yellow'
+  with_fx :pan, pan: 1 do
+    # with_fx :band_eq, freq: 63, db: -5 do
+
+    play note, amp: amp,
+         attack: 0.01, decay: 0.5 * length,  sustain: 0 * length, release: 0.375 * length,
+         attack_level: 0.2,
+         cutoff: 120, cutoff_slide: 0.75,
+         depth: 0.75,
+         pitch: -0.1
+
+    play note+3, amp: amp / 2.0,
+         attack: 0.01, decay: 0.5 * length, sustain: 0 * length, release: 0.375 * length,
+         attack_level: 1.2,
+         cutoff: 120, cutoff_slide: 0.75,
+         depth: 0.75,
+         pitch: -0.1
+
+
+    play note-2, amp: amp / 2.0,
+         attack: 0.05, decay: 0.3 * length, sustain: 0.1*length, release: 0.2,
+         depth: 1,
+         pitch: 0.1
+    #end
   end
 end
 
