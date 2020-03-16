@@ -49,3 +49,24 @@ div.vertical-line{
   left: 50vw;
   z-index: 0;
 }
+
+img {
+  position: fixed;
+  height: 50vh;
+  width: 50vw;
+}
+
+.top {
+  top: 0;
+}
+
+.bottom {
+  top: 50%;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  left: 50%;
