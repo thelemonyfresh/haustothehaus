@@ -10,13 +10,16 @@ $('document').ready( function(){
 
 
   var visualizationFunctions = {
-    '/flash': flash,
+    '/blink': blink,
+    '/pulse': pulse,
+    '/gif': gif
   };
 
   // catch and process osc messages
   port.on("message", async function (oscMessage) {
-    visualizationFunctions[oscMessage.address](oscMessage.args);
-    console.log("args");
+    console.log(`address: ${oscMessage.address}, args: ${oscMessage.args}`);
     console.log(oscMessage.args);
+
+    visualizationFunctions[oscMessage.address](oscMessage.args);
   });
 });

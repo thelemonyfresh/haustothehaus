@@ -1,30 +1,34 @@
-function flash(args) {
-  console.log(`flash called with ${args}`);
-  // $(selector).show();
-  // await sleep(duration);
-  // $(selector).hide();
+function blink(args) {
+  console.log(`blink called with ${args}`);
+  let duration = args[0];
+  let selector = args[1];
+  let elem = $(selector);
+  elem.hide();
+  setTimeout(() => { elem.show(); }, duration);
 }
 
-
-function  pulse(args) {
+function pulse(args) {
   console.log(`pulse called with ${args}`);
-  // $(selector).velocity({ opacity: 0 }, {
-  //   duration: duration/4,
-  //   easing: 'easeOutCubix',
-  //   queue: false
-  // });
-  // await sleep(duration/2);
-  // $(selector).velocity({ opacity: 1 },
-  //                      { duration: 3*duration/2,
-  //                        queue: false
-  //                      });
+  let duration = args[0];
+  let selector = args[1];
+  let elem = $(selector);
+  elem.velocity({ opacity: 0 }, {
+    duration: duration/4,
+    easing: 'easeOutCubix',
+    queue: true
+  }).velocity({ opacity: 1 }, {
+    duration: duration/2,
+    queue: true
+  });
 }
 
-// filename, duration
 let quadrantsFull = Array(4).fill(false);
 
 async function gif(args) {
+  // file_name, time
   console.log(`gif called with ${args}`);
+  let duration = args[0];
+  let file_name = args[1];
 
   let currentQuadrant = quadrantsFull.indexOf(false);
   if (currentQuadrant == -1) currentQuadrant = 0;
@@ -40,23 +44,21 @@ async function gif(args) {
   ];
 
   let elem = document.createElement("img");
-  elem.setAttribute("src", "gifs/dancing_data.gif");
+  elem.setAttribute("src", `gifs/${file_name}`);
   elem.setAttribute("class", quadrants[currentQuadrant]);
-
   let currentId = Math.random().toString(36).substring(7);
   elem.setAttribute("id", currentId);
 
   quadrantsFull[currentQuadrant] = true;
   document.body.appendChild(elem);
 
-  setTimeout(() => { removeElementFromQuadrant(currentQuadrant, elem); }, 1000);
+  setTimeout(() => { removeElementFromQuadrant(currentQuadrant, elem); }, duration);
 }
 
 function removeElementFromQuadrant(quadrant, element) {
   document.body.removeChild(element);
   quadrantsFull[quadrant] = false;
 }
-
 
 function rotate(args) {
   console.log(`rotate called with ${args}`);

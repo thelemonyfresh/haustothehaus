@@ -5,7 +5,7 @@ html, body { margin:0;
              background-color: black;
              font-family: monospace;
              }
-svg { position:fixed; top:0; left:0; height:100%; width:100% }
+svg { position:fixed; top:0; left:0; height:100%; width:100%; z-index: 1;}
 
 .big-haus, .little-haus {
   fill: #f9de2a;
