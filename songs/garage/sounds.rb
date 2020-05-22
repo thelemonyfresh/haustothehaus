@@ -47,7 +47,6 @@ end
 # keys
 # 4
 define :keys do
-  falling_text "keys", 6
   with_fx :reverb, room: 0.1, mix: 0.4, damp: 0.6  do
     sample haus_samps, "neu_haus_keys", amp: 1.5, start: 0.087, finish: 0.44, release: 1
   end
@@ -99,9 +98,6 @@ end
 
 define :car_door_close do
   # door close on 5
-  at 4 do
-    falling_text "car door", 2
-  end
 
   in_thread do
     with_fx :reverb, room: 0.8 , mix: 0, mix_slide: 0.25, damp: 0.9 do |fx|
