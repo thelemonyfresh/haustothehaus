@@ -15,10 +15,8 @@ function pulse(args) {
   elem.velocity({ opacity: 0 }, {
     duration: duration/4,
     easing: 'easeOutCubix',
-    queue: true
   }).velocity({ opacity: 1 }, {
     duration: duration/2,
-    queue: true
   });
 }
 

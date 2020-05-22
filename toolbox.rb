@@ -4,7 +4,7 @@
 
 haus_samps = '/Users/daniel/recording/haus_samples'
 
-run_file '/Users/daniel/src/haustothehaus/songs/garage/instruments.rb'
+run_file '/Users/daniel/src/haustothehaus/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/sounds.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/patterns.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/samples.rb'
@@ -20,9 +20,6 @@ run_file "/Users/daniel/src/talldan_sonicpi/numark_sampler.rb"
 
 define :viz do |message, beats, val1=nil, val2=nil|
   dur = 1000 * beats * 60.0 / current_bpm
-  puts message
-  puts beats
-  puts val1
   osc message, dur, val1, val2
 end
 
