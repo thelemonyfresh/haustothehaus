@@ -1,102 +1,29 @@
 haus_samps = "/Users/daniel/recording/haus_samples"
 
-#
-# Sounds.
-#
-
-# garage_door
-# 32
-
-define :haus_garage_door do
-  st = ring(0,0.5).tick(:hgd_st)
-  fn = ring(0.5,1).tick(:hgd_fn)
-
-  puts st
-  puts fn
-
-  with_fx :flanger, mix: 1, phase: 8, delay: 5 do
-    sample haus_samps, "west_garage_door", amp: 0.8,
-           start: st,
-           finish: fn
-  end
-end
-
-# gravel_bd
-# 0.5
-define :gravel_bd do
-  with_fx :reverb, mix: 0.2, room: 0.5, damp: 1 do
-    with_fx :distortion, distort: 0.3 do
-      sample :bd_haus, amp: 0.7, attack: 0.01, sustain: 0.1, release: 0.1
-      with_fx :lpf, cutoff: 50 do
-        with_fx :octaver, subsub_amp: 1, sub_amp: 1, super_amp: 0 do
-          sample :drum_tom_mid_soft, amp: 1, start: 0.01,
-                 attack: 0.001, attack_level: 1.25,
-                 decay: 0.01,
-                 sustain: 0,
-                 release: 0.15
-        end
-      end
-    end
-  end
-
-  #pulse %w(.h .a .u .s).map { |l| '.big-haus' + l }.ring.tick(:big), 0.75
-end
-
-
-
-# keys
-# 4
-define :keys do
-  with_fx :reverb, room: 0.1, mix: 0.4, damp: 0.6  do
-    sample haus_samps, "neu_haus_keys", amp: 1.5, start: 0.087, finish: 0.44, release: 1
-  end
-end
-
-# # haus_keys
-# # 0.5
-define :haus_keys do
-  ech = 0 #spread(5,16).tick(:keys_echo) ? 1 : 0
-  ph = spread(7,16).tick(:keys_ph) ? 0.24 : 0.49
-
-  with_fx :hpf, cutoff: 100 do
-    with_fx :pan, pan: -0.5, amp: 1 do
-      sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-             rate: 2,
-             start: 0.803,
-             finish: 0.8895
-      # numark_sampler_a(haus_samps, 'neu_haus_keys')
-
-      sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-             rate: 1,
-             start: 0.2295,
-             finish: 0.23884
-    end
-    with_fx :pan, pan: 0.5, amp: 1 do
-      #numark_sampler_b(haus_samps, 'neu_haus_keys')
-      sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-             rate: 2,
-             start: 0.2295,
-             finish: 0.26884
-
-      sample '/Users/daniel/recording/haus_samples', 'neu_haus_keys',
-             rate: 1,
-             start: 0.809,
-             finish: 0.8195
+define :garage_door do |current_time = nil|
+  if !current_time.nil? && current_time % 32 == 0
+    with_fx :flanger, mix: 0.6, phase: 8, delay: 5 do
+      sample haus_samps, "west_garage_door", amp: 0.8
     end
   end
 end
 
-
-# car
-# n/t
-define :car do
-  sample haus_samps, "car"
+define :keys do |current_time = nil|
+  if current_time.nil? || current_time % 16 == 0
+    with_fx :reverb, room: 0.1, mix: 0.4, damp: 0.6  do
+      sample haus_samps, "neu_haus_keys", amp: 1.5, start: 0.087, finish: 0.44, release: 1
+    end
+  end
 end
 
-# car_door_close
-# 8
+define :car do |current_time = nil|
+  if current_time.nil? || current_time % 32 == 0
+    sample haus_samps, "car"
+  end
+end
 
-define :car_door_close do
+define :car_door_close do |current_time = nil|
+  if current_time.nil? || current_time % 8 == 0
   # door close on 5
 
   in_thread do
@@ -107,9 +34,87 @@ define :car_door_close do
       control fx, mix: 0.3
     end
   end
+  end
 end
 
-define :windchime do
-  sample haus_samps, 'bells.aif',
-         beat_stretch: 32
+define :windchime do |current_time = nil|
+  if current_time.nil? || current_time % 32 == 0
+
+    sample haus_samps, 'bells.aif',
+           beat_stretch: 32
+  end
 end
+
+define :windy_melody do |current_time = nil|
+  if current_time.nil? || current_time % 4 == 0
+    in_thread do
+      nts = scale(:D, :minor_pentatonic, invert: 2)
+
+      with_fx :slicer, phase: 0.25, mix: amt do
+        3.times do
+          falling_text 'windy', 8
+          2.times do |n|
+            windy_synth(nts[3], 0.5)
+            sleep 0.5
+          end
+          sleep 1
+          windy_synth(nts[0], 2)
+          sleep 6
+        end
+        windy_synth(nts[5], 2)
+        sleep 2
+        windy_synth(nts[1], 1)
+        sleep 3
+      end
+    end
+  end
+end
+
+define :path do |current_time = nil|
+  if current_time.nil? || current_time % 4 == 0
+    # Cs, A, Fs, B -- Fminor, Dmaj, Bmaj
+    in_thread do
+      16.times do
+        start = knit(0.0795, 2, 0.085, 2, 0.0895, 2, 0.075, 2).tick(:path_start)
+        #0.075, 0.795, 0.81, 0.845, 0.87, 0.895, 0.945, 0.995
+        finish = knit(0.085,2, 0.0895,2, 0.094,2, 0.079,2).tick(:path_finish)
+        with_fx :echo , phase: 0.75, decay: 2 do
+          sample '/Users/daniel/recording/haus_samples', 'palmiers', amp: 1,
+                 rate: 1.0,
+                 start: start,
+                 finish: finish
+
+        end
+        sleep 2
+      end
+    end
+  end
+end
+
+define :bushes do |current_time = nil|
+  if current_time.nil? || current_time % 4 == 0
+    in_thread do
+      use_synth :tb303
+      puts look
+      nts = knit(:Fs2, 5, :A2, 4, :Cs2, 1)
+      32.times do |n|
+        bangles = spread(5,16).tick(:spread)
+        if bangles
+          use_synth :tb303
+          play nts.tick(:notes),
+               amp: 0.2,
+               pan: 0,
+               attack: 0, decay: 0, sustain: 0, release: ring(0.25,0.35).tick(:len),
+               cutoff: range(80,120,5).tick(:cutoff_ramp),
+               cutoff_min: 50,
+               res: range(0.82,0.98,0.1).mirror.tick(:res_ramp)
+        end
+        sleep 0.25
+      end
+    end
+  end
+end
+
+# sub-bass synth line
+
+# wind should be underneath, heavily down and eq'd to fill in the separate parts
