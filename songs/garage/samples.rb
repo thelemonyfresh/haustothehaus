@@ -1,3 +1,23 @@
+# pick two samples, set up cue points for the numark device
+
+haus_samps_path =  '/Users/daniel/recording/haus_samples'
+
+define :alibi do
+  {
+    pack: haus_samps_path,
+    name: 'alibi',
+    default_start: 0,
+    cue_points: [
+      0,
+      0.25,
+      0.5,
+      0.75
+    ]
+  }
+end
+
+#
+
 define :seem_to do
     sample '/Users/daniel/recording/haus_samples', 'indigo',
       rate: 1.03,

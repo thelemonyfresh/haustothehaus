@@ -6,7 +6,8 @@ haus_samps = '/Users/daniel/recording/haus_samples'
 
 run_file '/Users/daniel/src/haustothehaus/instruments.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/sounds.rb'
-run_file '/Users/daniel/src/haustothehaus/songs/garage/patterns.rb'
+run_file '/Users/daniel/src/haustothehaus/songs/garage/drums.rb'
+#run_file '/Users/daniel/src/haustothehaus/songs/garage/patterns.rb'
 run_file '/Users/daniel/src/haustothehaus/songs/garage/samples.rb'
 
 run_file '/Users/daniel/src/haustothehaus/songs/foyer/instruments.rb'
