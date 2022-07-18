@@ -3,7 +3,7 @@
     "main": "index.js",
     "version": "0.0.1",
     "dependencies": {
-        "jquery-ui": "^1.12.1",
+        "jquery-ui": "^1.13.2",
         "osc": "2.2.1",
         "svg.js": "^2.6.5",
         "ws": "5.1.1"
